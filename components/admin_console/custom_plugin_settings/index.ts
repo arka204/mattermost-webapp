@@ -11,7 +11,7 @@ import {t} from 'utils/i18n';
 import SchemaAdminSettings from '../schema_admin_settings';
 import {it} from '../admin_definition';
 
-import CustomPluginSettings from './custom_plugin_settings.jsx';
+import CustomPluginSettings from './custom_plugin_settings';
 
 function makeGetPluginSchema() {
     return createSelector(
