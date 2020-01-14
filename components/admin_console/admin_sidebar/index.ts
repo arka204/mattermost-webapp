@@ -9,7 +9,7 @@ import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general
 import {getNavigationBlocked} from 'selectors/views/admin';
 import {getAdminDefinition} from 'selectors/admin_console';
 
-import AdminSidebar from './admin_sidebar.jsx';
+import AdminSidebar from './admin_sidebar';
 
 function mapStateToProps(state) {
     const license = getLicense(state);

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, intlShape} from 'react-intl';
 import {Tooltip, OverlayTrigger} from 'react-bootstrap';
@@ -17,68 +17,96 @@ import AdminSidebarHeader from 'components/admin_console/admin_sidebar_header';
 import AdminSidebarSection from 'components/admin_console/admin_sidebar_section.jsx';
 import Highlight from 'components/admin_console/highlight';
 import SearchIcon from 'components/widgets/icons/search_icon.jsx';
+import { isUndefined } from 'util';
 
-const renderScrollView = (props) => (
+type Props = {
+    license: Object;
+    config: any;
+    plugins?: any;
+    adminDefinition: any;
+    buildEnterpriseReady?: Boolean;
+    siteName?: string;
+    onFilterChange: (e?: any) => void;
+    navigationBlocked: Boolean;
+    actions: { getPlugins: (e? : any) => void };
+}
+
+type State = {
+    sections: any;
+    filter: any;
+}
+
+const renderScrollView = (props: Props) => (
     <div
         {...props}
         className='scrollbar--view'
     />
 );
 
-const renderScrollThumbHorizontal = (props) => (
+const renderScrollThumbHorizontal = (props: Props) => (
     <div
         {...props}
         className='scrollbar--horizontal'
     />
 );
 
-const renderScrollThumbVertical = (props) => (
+const renderScrollThumbVertical = (props: Props) => (
     <div
         {...props}
         className='scrollbar--vertical'
     />
 );
 
-export default class AdminSidebar extends React.Component {
+export default class AdminSidebar extends React.Component<Props, State> {
+    public static defaultProps = {
+        show: true,
+        className: '',
+        plugins: {},
+    }
+    idx: any;
+    searchRef: React.RefObject<any>;
     static get contextTypes() {
         return {
             intl: intlShape.isRequired,
         };
     }
 
-    static propTypes = {
-        license: PropTypes.object.isRequired,
-        config: PropTypes.object,
-        plugins: PropTypes.object,
-        adminDefinition: PropTypes.object,
-        buildEnterpriseReady: PropTypes.bool,
-        siteName: PropTypes.string,
-        onFilterChange: PropTypes.func.isRequired,
-        navigationBlocked: PropTypes.bool.isRequired,
-        actions: PropTypes.shape({
+    // static propTypes = {
+    //     license: PropTypes.object.isRequired,
+    //     config: PropTypes.object,
+    //     plugins: PropTypes.object,
+    //     adminDefinition: PropTypes.object,
+    //     buildEnterpriseReady: PropTypes.bool,
+    //     siteName: PropTypes.string,
+    //     onFilterChange: PropTypes.func.isRequired,
+    //     navigationBlocked: PropTypes.bool.isRequired,
+    //     actions: PropTypes.shape({
 
-            /*
-             * Function to get installed plugins
-             */
-            getPlugins: PropTypes.func.isRequired,
-        }).isRequired,
-    }
+    //         /*
+    //          * Function to get installed plugins
+    //          */
+    //         getPlugins: PropTypes.func.isRequired,
+    //     }).isRequired,
+    //}
 
-    static defaultProps = {
-        plugins: {},
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
+    getState() : State {
+        return {
             sections: null,
             filter: '',
-        };
+        }
+    }
+
+    constructor(props: Readonly<Props>) {
+        super(props);
+        this.state = this.getState();
         this.idx = null;
         this.searchRef = React.createRef();
     }
 
     componentDidMount() {
+        //if (isUndefined (this.props.config)) throw new Error('this.props.config is undefined');
+        if (Object.prototype.hasOwnProperty.call(this.props.config, 'PluginSettings.Enable')) throw new Error("this.props.config isn't defined properly");
+        // try/catch?
         if (this.props.config.PluginSettings.Enable) {
             this.props.actions.getPlugins();
         }
@@ -90,7 +118,7 @@ export default class AdminSidebar extends React.Component {
         this.updateTitle();
     }
 
-    onFilterChange = (e) => {
+    onFilterChange = (e: { target: { value: any; }; }) => {
         const filter = e.target.value;
         if (filter === '') {
             this.setState({sections: null, filter});
@@ -139,7 +167,7 @@ export default class AdminSidebar extends React.Component {
     }
 
     visibleSections = () => {
-        const isVisible = (item) => {
+        const isVisible = (item : any) => {
             if (!item.schema) {
                 return false;
             }
@@ -154,21 +182,28 @@ export default class AdminSidebar extends React.Component {
             return true;
         };
         const result = new Set();
-        for (const section of Object.values(this.props.adminDefinition)) {
+        Object.values(this.props.adminDefinition).forEach(function (section: any) {
+            Object.values(section).forEach(function (item:any) {
+                if (isVisible(item)) {
+                    result.add(item.url);
+                }
+            });
+        });
+        /*for (const section of Object.values(this.props.adminDefinition)) {
             for (const item of Object.values(section)) {
                 if (isVisible(item)) {
                     result.add(item.url);
                 }
             }
-        }
+        }*/
         return result;
     }
 
-    renderRootMenu = (definition) => {
-        const sidebarSections = [];
-        Object.values(definition).forEach((section, sectionIndex) => {
-            const sidebarItems = [];
-            Object.values(section).forEach((item, itemIndex) => {
+    renderRootMenu = (definition: { [s: string]: unknown; } | ArrayLike<unknown>) => {
+        const sidebarSections: any = [];
+        Object.values(definition).forEach((section: any, sectionIndex) => {
+            let sidebarItems:any = [];
+            Object.values(section).forEach((item: any, itemIndex) => {
                 if (!item.title) {
                     return;
                 }
@@ -239,16 +274,16 @@ export default class AdminSidebar extends React.Component {
     }
 
     renderPluginsMenu = () => {
-        const customPlugins = [];
+        const customPlugins: any = [];
         if (this.props.config.PluginSettings.Enable) {
-            Object.values(this.props.plugins).sort((a, b) => {
+            Object.values(this.props.plugins).sort((a: any, b: any) => {
                 const nameCompare = a.name.localeCompare(b.name);
                 if (nameCompare !== 0) {
                     return nameCompare;
                 }
 
                 return a.id.localeCompare(b.id);
-            }).forEach((p) => {
+            }).forEach((p: any) => {
                 const hasSettings = p.settings_schema && (p.settings_schema.header || p.settings_schema.footer || p.settings_schema.settings);
                 if (!hasSettings) {
                     return;
