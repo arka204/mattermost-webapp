@@ -1,7 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-//import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage, intlShape} from 'react-intl';
 import {Tooltip, OverlayTrigger} from 'react-bootstrap';
@@ -17,7 +16,6 @@ import AdminSidebarHeader from 'components/admin_console/admin_sidebar_header';
 import AdminSidebarSection from 'components/admin_console/admin_sidebar_section.jsx';
 import Highlight from 'components/admin_console/highlight';
 import SearchIcon from 'components/widgets/icons/search_icon.jsx';
-import { isUndefined } from 'util';
 
 type Props = {
     license: Object;
@@ -71,24 +69,6 @@ export default class AdminSidebar extends React.Component<Props, State> {
         };
     }
 
-    // static propTypes = {
-    //     license: PropTypes.object.isRequired,
-    //     config: PropTypes.object,
-    //     plugins: PropTypes.object,
-    //     adminDefinition: PropTypes.object,
-    //     buildEnterpriseReady: PropTypes.bool,
-    //     siteName: PropTypes.string,
-    //     onFilterChange: PropTypes.func.isRequired,
-    //     navigationBlocked: PropTypes.bool.isRequired,
-    //     actions: PropTypes.shape({
-
-    //         /*
-    //          * Function to get installed plugins
-    //          */
-    //         getPlugins: PropTypes.func.isRequired,
-    //     }).isRequired,
-    //}
-
     getState() : State {
         return {
             sections: null,
@@ -104,9 +84,6 @@ export default class AdminSidebar extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        //if (isUndefined (this.props.config)) throw new Error('this.props.config is undefined');
-        if (Object.prototype.hasOwnProperty.call(this.props.config, 'PluginSettings.Enable')) throw new Error("this.props.config isn't defined properly");
-        // try/catch?
         if (this.props.config.PluginSettings.Enable) {
             this.props.actions.getPlugins();
         }
@@ -189,13 +166,6 @@ export default class AdminSidebar extends React.Component<Props, State> {
                 }
             });
         });
-        /*for (const section of Object.values(this.props.adminDefinition)) {
-            for (const item of Object.values(section)) {
-                if (isVisible(item)) {
-                    result.add(item.url);
-                }
-            }
-        }*/
         return result;
     }
 
