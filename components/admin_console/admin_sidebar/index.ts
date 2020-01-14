@@ -11,7 +11,7 @@ import {getAdminDefinition} from 'selectors/admin_console';
 
 import AdminSidebar from './admin_sidebar';
 
-function mapStateToProps(state) {
+function mapStateToProps(state: { entities: { admin: { config: any; plugins: any; }; }; }) {
     const license = getLicense(state);
     const config = getConfig(state);
     const buildEnterpriseReady = config.BuildEnterpriseReady === 'true';
@@ -29,7 +29,7 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch : any) {
     return {
         actions: bindActionCreators({
             getPlugins,
