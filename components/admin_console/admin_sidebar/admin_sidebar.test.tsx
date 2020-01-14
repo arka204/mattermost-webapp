@@ -5,7 +5,7 @@ import React from 'react';
 import {IntlProvider} from 'react-intl';
 import {shallow} from 'enzyme';
 
-import AdminSidebar from 'components/admin_console/admin_sidebar/admin_sidebar.jsx';
+import AdminSidebar from 'components/admin_console/admin_sidebar/admin_sidebar';
 import AdminDefinition from 'components/admin_console/admin_definition';
 
 jest.mock('utils/utils', () => {
