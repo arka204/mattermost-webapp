@@ -125,5 +125,5 @@ function openSidebarStyles() {
     cy.get('#customThemes').click();
 
     // # Expand sidebar styles
-    cy.get('#sidebarStyles').click({force: true});
+    cy.get('.theme-elements__header').eq(0).should('contain', 'Sidebar Styles').click();
 }

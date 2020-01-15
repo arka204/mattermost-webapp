@@ -12,7 +12,6 @@ import {
     getGroupsAssociatedToChannel as fetchAssociatedGroups,
     linkGroupSyncable,
     unlinkGroupSyncable,
-    patchGroupSyncable,
 } from 'mattermost-redux/actions/groups';
 
 import {connect} from 'react-redux';
@@ -28,8 +27,9 @@ function mapStateToProps(state, props) {
     const channel = getChannel(state, channelID) || {};
     const team = getTeam(state, channel.team_id) || {};
     const groups = getGroupsAssociatedToChannel(state, channelID);
+    const associatedGroups = state.entities.channels.groupsAssociatedToChannel;
     const allGroups = getAllGroups(state, channel.team_id);
-    const totalGroups = groups.length;
+    const totalGroups = associatedGroups && associatedGroups[channelID] && associatedGroups[channelID].totalCount ? associatedGroups[channelID].totalCount : 0;
     return {
         channel,
         team,
@@ -52,7 +52,6 @@ function mapDispatchToProps(dispatch) {
             patchChannel,
             setNavigationBlocked,
             updateChannelPrivacy,
-            patchGroupSyncable,
         }, dispatch),
     };
 }

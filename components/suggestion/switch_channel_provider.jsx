@@ -133,11 +133,7 @@ class SwitchChannelSuggestion extends Suggestion {
         return (
             <div
                 onClick={this.handleClick}
-                onMouseMove={this.handleMouseMove}
                 className={className}
-                ref={(node) => {
-                    this.node = node;
-                }}
                 id={`switchChannel_${channel.name}`}
                 data-testid={channel.name}
                 {...Suggestion.baseProps}

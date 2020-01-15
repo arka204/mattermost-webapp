@@ -10,16 +10,14 @@ export default class ActionButton extends React.PureComponent {
     static propTypes = {
         action: PropTypes.object.isRequired,
         handleAction: PropTypes.func.isRequired,
-        disabled: PropTypes.bool,
     }
 
     render() {
-        const {action, handleAction, disabled} = this.props;
+        const {action, handleAction} = this.props;
         return (
             <button
                 data-action-id={action.id}
                 data-action-cookie={action.cookie}
-                disabled={disabled}
                 key={action.id}
                 onClick={handleAction}
             >

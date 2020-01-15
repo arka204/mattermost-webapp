@@ -86,12 +86,10 @@
 }
 
 @media (max-width: 1024px) {
-    .inner-wrap:not(.move--left) {
-        .channel-header {
-            .search-bar__container {
-                .search__form {
-                    width: 150px;
-                }
+    .channel-header {
+        .search-bar__container {
+            .search__form {
+                width: 150px;
             }
         }
     }

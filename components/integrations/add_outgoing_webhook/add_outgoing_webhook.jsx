@@ -20,6 +20,11 @@ export default class AddOutgoingWebhook extends React.PureComponent {
          */
         team: PropTypes.object.isRequired,
 
+        /**
+         * The request state for createOutgoingHook action. Contains status and error
+         */
+        createOutgoingHookRequest: PropTypes.object.isRequired,
+
         actions: PropTypes.shape({
 
             /**
@@ -50,14 +55,14 @@ export default class AddOutgoingWebhook extends React.PureComponent {
     addOutgoingHook = async (hook) => {
         this.setState({serverError: ''});
 
-        const {data, error} = await this.props.actions.createOutgoingHook(hook);
+        const {data} = await this.props.actions.createOutgoingHook(hook);
         if (data) {
             browserHistory.push(`/${this.props.team.name}/integrations/confirm?type=outgoing_webhooks&id=${data.id}`);
             return;
         }
 
-        if (error) {
-            this.setState({serverError: error.message});
+        if (this.props.createOutgoingHookRequest.error) {
+            this.setState({serverError: this.props.createOutgoingHookRequest.error.message});
         }
     }
 

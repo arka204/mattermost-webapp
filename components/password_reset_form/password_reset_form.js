@@ -3,6 +3,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {FormattedMessage} from 'react-intl';
 
 import {browserHistory} from 'utils/browser_history';
@@ -22,18 +23,13 @@ export default class PasswordResetForm extends React.PureComponent {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            error: null
-        };
-
-        this.passwordInput = React.createRef();
+        this.state = {error: null};
     }
 
     handlePasswordReset = async (e) => {
         e.preventDefault();
 
-        const password = this.passwordInput.current.value;
+        const password = ReactDOM.findDOMNode(this.refs.password).value;
         if (!password || password.length < Constants.MIN_PASSWORD_LENGTH) {
             this.setState({
                 error: (
@@ -103,7 +99,7 @@ export default class PasswordResetForm extends React.PureComponent {
                                 type='password'
                                 className='form-control'
                                 name='password'
-                                ref={this.passwordInput}
+                                ref='password'
                                 placeholder={{id: t('password_form.pwd'), defaultMessage: 'Password'}}
                                 spellCheck='false'
                                 autoFocus={true}

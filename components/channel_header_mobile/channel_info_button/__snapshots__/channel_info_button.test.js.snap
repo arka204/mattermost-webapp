@@ -47,11 +47,11 @@ exports[`components/ChannelHeaderMobile/ChannelInfoButton should match snapshot,
     defaultOverlayShown={false}
     overlay={
       <Popover
+        bsClass="popover"
+        bsStyle="info"
         className="navbar__popover"
         id="header-popover"
         placement="bottom"
-        popoverSize="sm"
-        popoverStyle="info"
       >
         <Connect(Markdown)
           message="channel header"
@@ -74,7 +74,6 @@ exports[`components/ChannelHeaderMobile/ChannelInfoButton should match snapshot,
     trigger="click"
   >
     <button
-      aria-label="Info"
       className="navbar-toggle navbar-right__icon navbar-info-button pull-right"
       onClick={[Function]}
     >
@@ -178,11 +177,11 @@ exports[`components/ChannelHeaderMobile/ChannelInfoButton should match snapshot,
     defaultOverlayShown={false}
     overlay={
       <Popover
+        bsClass="popover"
+        bsStyle="info"
         className="navbar__popover"
         id="header-popover"
         placement="bottom"
-        popoverSize="sm"
-        popoverStyle="info"
       >
         <div>
           <FormattedMessage
@@ -225,7 +224,6 @@ exports[`components/ChannelHeaderMobile/ChannelInfoButton should match snapshot,
     trigger="click"
   >
     <button
-      aria-label="Info"
       className="navbar-toggle navbar-right__icon navbar-info-button pull-right"
       onClick={[Function]}
     >

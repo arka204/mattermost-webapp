@@ -20,7 +20,7 @@ exports[`components/MarkdownImage should match snapshot for SizeAwareImage dimen
 <React.Fragment>
   <SizeAwareImage
     alt="test image"
-    className="markdown-inline-img markdown-inline-img--hover markdown-inline-img--no-border"
+    className="markdown-inline-img"
     dimensions={
       Object {
         "format": "jpg",
@@ -31,8 +31,7 @@ exports[`components/MarkdownImage should match snapshot for SizeAwareImage dimen
     }
     onClick={[Function]}
     onImageLoadFail={[Function]}
-    onImageLoaded={[Function]}
-    showLoader={false}
+    showLoader={true}
     src="safeSrc"
   />
 </React.Fragment>
@@ -48,26 +47,17 @@ exports[`components/MarkdownImage should match snapshot for broken link 1`] = `
 `;
 
 exports[`components/MarkdownImage should render a link if the source is unsafe 1`] = `
-<div
-  style={
-    Object {
-      "display": "inline-block",
-    }
-  }
->
-  <img
-    alt="test image"
-    className="markdown-inline-img broken-image"
-    src={null}
-  />
-</div>
+<img
+  alt="test image"
+  src={null}
+/>
 `;
 
 exports[`components/MarkdownImage should render an image with no preview if the source is safe and the image is a link 1`] = `
 <div>
   <SizeAwareImage
     alt="test image"
-    className="markdown-inline-img markdown-inline-img--hover markdown-inline-img--no-border"
+    className="markdown-inline-img"
     dimensions={
       Object {
         "format": "png",
@@ -78,8 +68,7 @@ exports[`components/MarkdownImage should render an image with no preview if the 
     }
     onClick={[Function]}
     onImageLoadFail={[Function]}
-    onImageLoaded={[Function]}
-    showLoader={false}
+    showLoader={true}
     src="https://example.com/image.png"
   />
 </div>
@@ -100,8 +89,7 @@ exports[`components/MarkdownImage should render an image with preview modal if t
     }
     onClick={[Function]}
     onImageLoadFail={[Function]}
-    onImageLoaded={[Function]}
-    showLoader={false}
+    showLoader={true}
     src="https://example.com/image.png"
   />
   <Connect(ViewImageModal)

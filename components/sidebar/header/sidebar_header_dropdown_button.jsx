@@ -3,11 +3,10 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Tooltip} from 'react-bootstrap';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
 import {localizeMessage} from 'utils/utils.jsx';
-import OverlayTrigger from 'components/overlay_trigger';
 import MenuIcon from 'components/widgets/icons/menu_icon';
 import Constants from 'utils/constants';
 
@@ -54,6 +53,7 @@ export default class SidebarHeaderDropdownButton extends React.PureComponent {
                     delayShow={Constants.OVERLAY_TIME_DELAY}
                     placement='bottom'
                     overlay={<Tooltip id='team-name__tooltip'>{this.props.teamDescription}</Tooltip>}
+                    ref='descriptionOverlay'
                 >
                     {teamNameWithToolTip}
                 </OverlayTrigger>

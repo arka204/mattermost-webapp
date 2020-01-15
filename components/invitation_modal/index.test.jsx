@@ -27,9 +27,6 @@ describe('mapStateToProps', () => {
             },
             channels: {
                 channels: {},
-                channelsInTeam: {
-                    [currentTeamId]: new Set(),
-                },
             },
             users: {
                 currentUserId,

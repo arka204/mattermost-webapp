@@ -211,15 +211,6 @@ export default class SearchableUserList extends React.Component {
         } else {
             filterRow = (
                 <div className='col-xs-12'>
-                    <label
-                        className='hidden-label'
-                        htmlFor='searchUsersInput'
-                    >
-                        <FormattedMessage
-                            id='filtered_user_list.search'
-                            defaultMessage='Search users'
-                        />
-                    </label>
                     <QuickInput
                         id='searchUsersInput'
                         ref='filter'

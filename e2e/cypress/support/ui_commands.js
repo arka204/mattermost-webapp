@@ -1,4 +1,3 @@
-
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
@@ -12,8 +11,8 @@ Cypress.Commands.add('logout', () => {
     cy.get('#logout').click({force: true});
 });
 
-Cypress.Commands.add('toMainChannelView', (username = 'user-1', password) => {
-    cy.apiLogin(username, password);
+Cypress.Commands.add('toMainChannelView', (username, password) => {
+    cy.apiLogin('user-1', password);
     cy.visit('/');
 
     cy.get('#post_textbox').should('be.visible');
@@ -31,14 +30,6 @@ Cypress.Commands.add('getSubpath', () => {
             return url.replace(origin, '').substring(0, url.length - origin.length - 1);
         });
     });
-});
-
-Cypress.Commands.add('getCurrentUserId', () => {
-    return cy.wrap(new Promise((resolve) => {
-        cy.getCookie('MMUSERID').then((cookie) => {
-            resolve(cookie.value);
-        });
-    }));
 });
 
 // ***********************************************************
@@ -123,11 +114,6 @@ Cypress.Commands.add('typeCmdOrCtrl', () => {
     cy.get('#post_textbox').type(cmdOrCtrl, {release: false});
 });
 
-Cypress.Commands.add('cmdOrCtrlShortcut', {prevSubject: true}, (subject, text) => {
-    const cmdOrCtrl = isMac() ? '{cmd}' : '{ctrl}';
-    return cy.get(subject).type(`${cmdOrCtrl}${text}`);
-});
-
 function isMac() {
     return navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 }
@@ -149,27 +135,20 @@ Cypress.Commands.add('postMessageReplyInRHS', (message) => {
 
 function waitUntilPermanentPost() {
     cy.get('#postListContent').should('be.visible');
-    cy.waitUntil(() => cy.findAllByTestId('postView').last().then((el) => !(el[0].id.includes(':'))));
+    cy.waitUntil(() => cy.getAllByTestId('postView').last().then((el) => !(el[0].id.includes(':'))));
 }
 
 Cypress.Commands.add('getLastPost', () => {
     waitUntilPermanentPost();
 
-    cy.findAllByTestId('postView').last();
+    cy.getAllByTestId('postView').last();
 });
 
 Cypress.Commands.add('getLastPostId', () => {
     waitUntilPermanentPost();
 
-    cy.findAllByTestId('postView').last().should('have.attr', 'id').and('not.include', ':').
+    cy.getAllByTestId('postView').last().should('have.attr', 'id').and('not.include', ':').
         invoke('replace', 'post_', '');
-});
-
-Cypress.Commands.add('getLastPostIdRHS', () => {
-    waitUntilPermanentPost();
-
-    cy.get('#rhsPostList > div').last().should('have.attr', 'id').and('not.include', ':').
-        invoke('replace', 'rhsPost_', '');
 });
 
 /**
@@ -182,7 +161,7 @@ Cypress.Commands.add('getLastPostIdRHS', () => {
 Cypress.Commands.add('getNthPostId', (index = 0) => {
     waitUntilPermanentPost();
 
-    cy.findAllByTestId('postView').eq(index).should('have.attr', 'id').and('not.include', ':').
+    cy.getAllByTestId('postView').eq(index).should('have.attr', 'id').and('not.include', ':').
         invoke('replace', 'post_', '');
 });
 
@@ -220,11 +199,11 @@ Cypress.Commands.add('compareLastPostHTMLContentFromFile', (file, timeout = TIME
 
 function clickPostHeaderItem(postId, location, item) {
     if (postId) {
-        cy.get(`#post_${postId}`).trigger('mouseover', {force: true});
+        cy.get(`#post_${postId}`).trigger('mouseover');
         cy.get(`#${location}_${item}_${postId}`).scrollIntoView().click({force: true});
     } else {
         cy.getLastPostId().then((lastPostId) => {
-            cy.get(`#post_${lastPostId}`).trigger('mouseover', {force: true});
+            cy.get(`#post_${lastPostId}`).trigger('mouseover');
             cy.get(`#${location}_${item}_${lastPostId}`).scrollIntoView().click({force: true});
         });
     }
@@ -276,23 +255,6 @@ Cypress.Commands.add('clickPostCommentIcon', (postId, location = 'CENTER') => {
     clickPostHeaderItem(postId, location, 'commentIcon');
 });
 
-/**
- * Click comment icon by post ID or to most recent post (if post ID is not provided)
- * This open up the RHS
- * @param {String} postId - Post ID
- * @param {String} menuItem - e.g. "Pin to channel"
- * @param {String} location - as 'CENTER', 'SEARCH'
- */
-Cypress.Commands.add('getPostMenu', (postId, menuItem, location = 'CENTER') => {
-    cy.clickPostDotMenu(postId, location).then(() => {
-        cy.get(`#post_${postId}`).should('be.visible').within(() => {
-            cy.get('.dropdown-menu').should('be.visible').within(() => {
-                return cy.findByText(menuItem).should('be.visible');
-            });
-        });
-    });
-});
-
 // Close RHS by clicking close button
 Cypress.Commands.add('closeRHS', () => {
     cy.get('#rhsCloseButton').should('be.visible').click();
@@ -324,7 +286,7 @@ Cypress.Commands.add('leaveTeam', () => {
     cy.get('#leaveTeamYes').click();
 
     // * Check that the "leave team modal" closed
-    cy.get('#leaveTeamModal').should('not.exist');
+    cy.get('#leaveTeamModal').should('not.be.visible');
 });
 
 // ***********************************************************
@@ -401,7 +363,7 @@ Cypress.Commands.add('updateChannelHeader', (text) => {
     cy.get('#channelHeaderDropdownIcon').
         should('be.visible').
         click();
-    cy.get('.Menu__content').
+    cy.get('#channelHeaderDropdownMenu').
         should('be.visible').
         find('#channelEditHeader').
         click();
@@ -450,45 +412,4 @@ Cypress.Commands.add('fileUpload', (targetInput, fileName = 'mattermost-icon.png
             {subjectType: 'input', force: true},
         );
     });
-});
-
-/**
- * Upload a file on target input in binary format -
- * @param {String} targetInput - #LocatorID
- * @param {String} fileName - Filename to upload from the fixture Ex: drawPlugin-binary.tar
- * @param {String} fileType - application/gzip
- */
-Cypress.Commands.add('uploadFile', {prevSubject: true}, (targetInput, fileName, fileType) => {
-    cy.log('Upload process started .FileName:' + fileName);
-    cy.fixture(fileName, 'binary').then((content) => {
-        return Cypress.Blob.binaryStringToBlob(content, fileType).then((blob) => {
-            const el = targetInput[0];
-            cy.log('el:' + el);
-            const testFile = new File([blob], fileName, {type: fileType});
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(testFile);
-            el.files = dataTransfer.files;
-            cy.wrap(targetInput).trigger('change', {force: true});
-        });
-    });
-});
-
-/**
- * Navigate to system console-PluginManagement from account settings
- */
-Cypress.Commands.add('systemConsolePluginManagement', () => {
-    cy.get('#lhsHeader').should('be.visible').within(() => {
-        // # Click hamburger main menu
-        cy.get('#sidebarHeaderDropdownButton').click();
-
-        // * Dropdown menu should be visible
-        cy.get('.dropdown-menu').should('be.visible').within(() => {
-            // * Plugin Marketplace button should be visible then click
-            cy.get('#systemConsole').should('be.visible').click();
-        });
-    });
-
-    //Search for plugin management in filter container
-    cy.get('li.filter-container').find('input#adminSidebarFilter.filter').
-        wait(TIMEOUTS.TINY).should('be.visible').type('plugin Management').click();
 });

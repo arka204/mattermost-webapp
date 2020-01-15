@@ -13,7 +13,6 @@ import {
     getGroupsAssociatedToTeam as fetchAssociatedGroups,
     linkGroupSyncable,
     unlinkGroupSyncable,
-    patchGroupSyncable,
 } from 'mattermost-redux/actions/groups';
 
 import {connect} from 'react-redux';
@@ -26,8 +25,9 @@ function mapStateToProps(state, props) {
     const teamID = props.match.params.team_id;
     const team = getTeam(state, teamID);
     const groups = getGroupsAssociatedToTeam(state, teamID);
+    const associatedGroups = state.entities.teams.groupsAssociatedToTeam;
     const allGroups = getAllGroups(state, teamID);
-    const totalGroups = groups.length;
+    const totalGroups = associatedGroups && associatedGroups[teamID] && associatedGroups[teamID].totalCount ? associatedGroups[teamID].totalCount : 0;
     return {
         team,
         groups,
@@ -47,7 +47,6 @@ function mapDispatchToProps(dispatch) {
             unlinkGroupSyncable,
             membersMinusGroupMembers,
             setNavigationBlocked,
-            patchGroupSyncable,
         }, dispatch),
     };
 }

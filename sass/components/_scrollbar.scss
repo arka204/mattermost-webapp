@@ -45,7 +45,7 @@ body {
 .scrollbar--horizontal,
 .scrollbar--vertical {
     @include border-radius(2px);
-    background-color: #999;
+    @include alpha-property(background-color, $black, .5);
 }
 
 .scrollbar--view {

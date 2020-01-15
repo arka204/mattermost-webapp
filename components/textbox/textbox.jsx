@@ -15,7 +15,7 @@ import SuggestionBox from 'components/suggestion/suggestion_box.jsx';
 import SuggestionList from 'components/suggestion/suggestion_list.jsx';
 import * as Utils from 'utils/utils.jsx';
 
-export default class Textbox extends React.PureComponent {
+export default class Textbox extends React.Component {
     static propTypes = {
         id: PropTypes.string.isRequired,
         channelId: PropTypes.string,
@@ -73,7 +73,6 @@ export default class Textbox extends React.PureComponent {
         }
 
         this.checkMessageLength(props.value);
-        this.wrapper = React.createRef();
     }
 
     handleChange = (e) => {
@@ -188,15 +187,11 @@ export default class Textbox extends React.PureComponent {
 
         let textboxClassName = 'form-control custom-textarea';
         let textWrapperClass = 'textarea-wrapper';
-        let wrapperHeight;
         if (this.props.emojiEnabled) {
             textboxClassName += ' custom-textarea--emoji-picker';
         }
         if (this.props.badConnection) {
             textboxClassName += ' bad-connection';
-        }
-        if (this.wrapper.current) {
-            wrapperHeight = this.getInputBox().clientHeight;
         }
         if (this.props.preview) {
             textboxClassName += ' custom-textarea--preview';
@@ -221,7 +216,7 @@ export default class Textbox extends React.PureComponent {
 
         return (
             <div
-                ref={this.wrapper}
+                ref='wrapper'
                 className={textWrapperClass}
             >
                 <SuggestionBox
@@ -250,7 +245,6 @@ export default class Textbox extends React.PureComponent {
                     disabled={this.props.disabled}
                     contextId={this.props.channelId}
                     listenForMentionKeyClick={this.props.listenForMentionKeyClick}
-                    wrapperHeight={wrapperHeight}
                 />
                 {preview}
             </div>

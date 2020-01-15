@@ -5,7 +5,7 @@ import React from 'react';
 
 import {localizeMessage} from 'utils/utils';
 import {ChannelHeaderDropdownItems} from 'components/channel_header_dropdown';
-import Menu from 'components/widgets/menu/menu';
+import Menu from 'components/widgets/menu/menu.jsx';
 
 export default class ChannelHeaderDropdown extends React.PureComponent {
     render() {

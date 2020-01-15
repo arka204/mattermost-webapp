@@ -14,7 +14,7 @@ import SettingItemMin from 'components/setting_item_min';
 
 const SECONDS_PER_MINUTE = 60;
 
-export default class EmailNotificationSetting extends React.PureComponent {
+export default class EmailNotificationSetting extends React.Component {
     static propTypes = {
         currentUserId: PropTypes.string.isRequired,
         activeSection: PropTypes.string.isRequired,
@@ -29,6 +29,7 @@ export default class EmailNotificationSetting extends React.PureComponent {
         focused: PropTypes.bool,
         sendEmailNotifications: PropTypes.bool,
         enableEmailBatching: PropTypes.bool,
+        siteName: PropTypes.string,
         actions: PropTypes.shape({
             savePreferences: PropTypes.func.isRequired,
         }).isRequired,
@@ -48,7 +49,6 @@ export default class EmailNotificationSetting extends React.PureComponent {
         this.state = {
             activeSection,
             emailInterval,
-            enableEmail,
             enableEmailBatching,
             sendEmailNotifications,
             newInterval: getEmailInterval(enableEmail && sendEmailNotifications, enableEmailBatching, emailInterval),
@@ -69,7 +69,6 @@ export default class EmailNotificationSetting extends React.PureComponent {
             return {
                 activeSection,
                 emailInterval,
-                enableEmail,
                 enableEmailBatching,
                 sendEmailNotifications,
                 newInterval: getEmailInterval(enableEmail && sendEmailNotifications, enableEmailBatching, emailInterval),
@@ -84,7 +83,6 @@ export default class EmailNotificationSetting extends React.PureComponent {
             return {
                 activeSection,
                 emailInterval,
-                enableEmail,
                 enableEmailBatching,
                 sendEmailNotifications,
                 newInterval: getEmailInterval(enableEmail && sendEmailNotifications, enableEmailBatching, emailInterval),
@@ -107,7 +105,7 @@ export default class EmailNotificationSetting extends React.PureComponent {
 
     handleSubmit = async () => {
         const {newInterval} = this.state;
-        if (this.props.emailInterval === newInterval && this.props.enableEmail === this.state.enableEmail) {
+        if (this.props.emailInterval === newInterval) {
             this.props.updateSection('');
         } else {
             // until the rest of the notification settings are moved to preferences, we have to do this separately
@@ -335,7 +333,10 @@ export default class EmailNotificationSetting extends React.PureComponent {
                         <div className='margin-top x2'>
                             <FormattedMessage
                                 id='user.settings.notifications.emailInfo'
-                                defaultMessage='Email notifications are sent for mentions and direct messages when you are offline or away for more than 5 minutes.'
+                                defaultMessage='Email notifications are sent for mentions and direct messages when you are offline or away from {siteName} for more than 5 minutes.'
+                                values={{
+                                    siteName: this.props.siteName,
+                                }}
                             />
                             {' '}
                             {batchingInfo}

@@ -9,7 +9,7 @@ import * as UserAgent from 'utils/user_agent';
 
 import ChannelMembersDropdown from 'components/channel_members_dropdown';
 import SearchableUserList from 'components/searchable_user_list/searchable_user_list_container.jsx';
-import LoadingScreen from 'components/loading_screen';
+
 const USERS_PER_PAGE = 50;
 
 export default class MemberListChannel extends React.PureComponent {
@@ -61,27 +61,29 @@ export default class MemberListChannel extends React.PureComponent {
         this.props.actions.setModalSearchTerm('');
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.searchTerm !== this.props.searchTerm) {
+    UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
+        if (this.props.searchTerm !== nextProps.searchTerm) {
             clearTimeout(this.searchTimeoutId);
-            const searchTerm = this.props.searchTerm;
+            const searchTerm = nextProps.searchTerm;
 
             if (searchTerm === '') {
                 this.loadComplete();
-                this.searchTimeoutId = 0;
+                this.searchTimeoutId = '';
                 return;
             }
 
             const searchTimeoutId = setTimeout(
                 async () => {
-                    const {data} = await prevProps.actions.searchProfiles(searchTerm, {team_id: this.props.currentTeamId, in_channel_id: this.props.currentChannelId});
+                    const {data} = await this.props.actions.searchProfiles(searchTerm, {team_id: nextProps.currentTeamId, in_channel_id: nextProps.currentChannelId});
 
                     if (searchTimeoutId !== this.searchTimeoutId) {
                         return;
                     }
 
-                    this.props.actions.loadStatusesForProfilesList(data);
-                    this.props.actions.loadTeamMembersAndChannelMembersForProfilesList(data, this.props.currentTeamId, this.props.currentChannelId).then(({data: membersLoaded}) => {
+                    this.setState({loading: true});
+
+                    nextProps.actions.loadStatusesForProfilesList(data);
+                    nextProps.actions.loadTeamMembersAndChannelMembersForProfilesList(data, nextProps.currentTeamId, nextProps.currentChannelId).then(({data: membersLoaded}) => {
                         if (membersLoaded) {
                             this.loadComplete();
                         }
@@ -107,9 +109,6 @@ export default class MemberListChannel extends React.PureComponent {
     }
 
     render() {
-        if (this.state.loading) {
-            return (<LoadingScreen/>);
-        }
         const channelIsArchived = this.props.channel.delete_at !== 0;
         return (
             <SearchableUserList

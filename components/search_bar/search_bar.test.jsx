@@ -29,7 +29,6 @@ describe('components/search_bar/SearchBar', () => {
             showFlaggedPosts: jest.fn(),
             closeRightHandSide: jest.fn(),
             autocompleteChannelsForSearch: jest.fn(),
-            autocompleteUsersInTeam: jest.fn(),
         },
     };
 

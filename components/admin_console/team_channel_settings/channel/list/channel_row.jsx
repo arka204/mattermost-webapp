@@ -24,14 +24,11 @@ export default class ChannelRow extends React.Component {
         const {channel} = this.props;
         return (
             <div
-                className='group'
+                className={'group '}
                 onClick={this.handleRowClick}
             >
                 <div className='group-row'>
-                    <span
-                        className='group-name overflow--ellipsis row-content'
-                        data-testid='channel-display-name'
-                    >
+                    <span className='group-name overflow--ellipsis row-content'>
                         {channel.type === Constants.PRIVATE_CHANNEL ? <LockIcon className='channel-icon channel-icon__lock'/> : <GlobeIcon className='channel-icon channel-icon__globe'/>}
                         {channel.display_name}
                     </span>
@@ -44,11 +41,8 @@ export default class ChannelRow extends React.Component {
                             defaultMessage={channel.group_constrained ? 'Group Sync' : 'Manual Invites'}
                         />
                     </span>
-                    <span
-                        className='group-actions'
-                        data-testid={`${channel.display_name}edit`}
-                    >
-                        <Link to={`/admin_console/user_management/channels/${channel.id}`} >
+                    <span className='group-actions'>
+                        <Link to={`/admin_console/user_management/channels/${channel.id}`}>
                             <FormattedMessage
                                 id='admin.channel_settings.channel_row.configure'
                                 defaultMessage='Edit'

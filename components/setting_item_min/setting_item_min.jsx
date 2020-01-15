@@ -127,12 +127,12 @@ export default class SettingItemMin extends React.PureComponent {
                 onClick={this.handleUpdateSection}
             >
                 <div className='d-flex'>
-                    <h4
+                    <div
                         id={this.props.section + 'Title'}
                         className='section-min__title'
                     >
                         {this.props.title}
-                    </h4>
+                    </div>
                     {editButton}
                 </div>
                 {describeSection}

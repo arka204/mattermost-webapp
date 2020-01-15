@@ -15,18 +15,19 @@ export default function Describe({section, isCollapsed, memberNotifyLevel, globa
         t('channel_notifications.levels.mention');
         t('channel_notifications.levels.none');
         const levelsFormattedMessageId = 'channel_notifications.levels.' + globalNotifyLevel;
-        const notifyLevel = (
-            <FormattedMessage
-                id={levelsFormattedMessageId}
-                defaultMessage={globalNotifyLevel}
-            />
-        );
         return (
-            <FormattedMessage
-                id='channel_notifications.globalDefault'
-                defaultMessage='Global default ({notifyLevel})'
-                values={{notifyLevel}}
-            />
+            <React.Fragment>
+                <FormattedMessage
+                    id='channel_notifications.globalDefault'
+                    defaultMessage='Global default'
+                />
+                <span>{' ('}</span>
+                <FormattedMessage
+                    id={levelsFormattedMessageId}
+                    defaultMessage={globalNotifyLevel}
+                />
+                <span>{')'}</span>
+            </React.Fragment>
         );
     } else if (memberNotifyLevel === NotificationLevels.MENTION && section === NotificationSections.MARK_UNREAD) {
         if (isCollapsed) {

@@ -5,23 +5,17 @@ import $ from 'jquery';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedHTMLMessage, FormattedMessage} from 'react-intl';
-import {Tooltip} from 'react-bootstrap';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {Client4} from 'mattermost-redux/client';
 
 import {uploadBrandImage, deleteBrandImage} from 'actions/admin_actions.jsx';
 import {Constants} from 'utils/constants';
 import FormError from 'components/form_error';
-import OverlayTrigger from 'components/overlay_trigger';
 
 const HTTP_STATUS_OK = 200;
 
 export default class BrandImageSetting extends React.PureComponent {
     static propTypes = {
-
-        /*
-         * Set for testing purpose
-         */
-        id: PropTypes.string,
 
         /*
          * Set to disable the setting
@@ -211,10 +205,7 @@ export default class BrandImageSetting extends React.PureComponent {
         }
 
         return (
-            <div
-                data-testid={this.props.id}
-                className='form-group'
-            >
+            <div className='form-group'>
                 <label className='control-label col-sm-4'>
                     <FormattedMessage
                         id='admin.team.brandImageTitle'

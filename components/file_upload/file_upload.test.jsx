@@ -9,7 +9,6 @@ import {clearFileInput} from 'utils/utils';
 import {shallowWithIntl} from 'tests/helpers/intl-test-helper';
 
 import FileUpload from 'components/file_upload/file_upload.jsx';
-import * as UserAgent from 'utils/user_agent';
 
 const generatedIdRegex = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/;
 
@@ -61,6 +60,7 @@ describe('components/FileUpload', () => {
 
         baseProps = {
             currentChannelId: 'channel_id',
+            intl: {},
             fileCount: 1,
             getTarget: emptyFunction,
             locale: General.DEFAULT_LOCALE,
@@ -98,33 +98,7 @@ describe('components/FileUpload', () => {
         expect(baseProps.onClick).toHaveBeenCalledTimes(1);
     });
 
-    test('should call onClick on fileInput when button is touched when isMobileApp=true', () => {
-        const origIsMobileApp = UserAgent.isMobileApp;
-        UserAgent.isMobileApp = jest.fn().mockImplementation(() => true);
-
-        const wrapper = shallowWithIntl(
-            <FileUpload {...baseProps}/>
-        );
-        const instance = wrapper.instance();
-        instance.handleLocalFileUploaded = jest.fn();
-        instance.fileInput = {
-            current: {
-                click: () => instance.handleLocalFileUploaded(),
-            },
-        };
-        wrapper.find('button').simulate('click');
-        expect(instance.handleLocalFileUploaded).toHaveBeenCalledTimes(0);
-
-        wrapper.find('button').simulate('touchend');
-        expect(instance.handleLocalFileUploaded).toHaveBeenCalledTimes(1);
-
-        UserAgent.isMobileApp = origIsMobileApp;
-    });
-
-    test('should call onClick on fileInput when button is touched when isMobileApp=false', () => {
-        const origIsMobileApp = UserAgent.isMobileApp;
-        UserAgent.isMobileApp = jest.fn().mockImplementation(() => false);
-
+    test('should call onClick on fileInput when button is touched', () => {
         const wrapper = shallowWithIntl(
             <FileUpload {...baseProps}/>
         );
@@ -136,12 +110,7 @@ describe('components/FileUpload', () => {
             },
         };
         wrapper.find('button').simulate('touchend');
-        expect(instance.handleLocalFileUploaded).toHaveBeenCalledTimes(0);
-
-        wrapper.find('button').simulate('click');
         expect(instance.handleLocalFileUploaded).toHaveBeenCalledTimes(1);
-
-        UserAgent.isMobileApp = origIsMobileApp;
     });
 
     test('should match state and call handleMaxUploadReached or props.onClick on handleLocalFileUploaded', () => {

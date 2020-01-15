@@ -3,8 +3,6 @@
 
 import FlexSearch from 'flexsearch/dist/flexsearch.es5';
 
-import {getPluginEntries} from './admin_console_plugin_index';
-
 function extractTextsFromSection(section, intl) {
     const texts = [];
     if (section.title) {
@@ -77,23 +75,16 @@ export function adminDefinitionsToUrlsAndTexts(adminDefinition, intl) {
     return entries;
 }
 
-export function generateIndex(AdminDefinition, plugins, intl) {
+export function generateIndex(adminDefinition, intl) {
     const idx = new FlexSearch();
-
-    addToIndex(adminDefinitionsToUrlsAndTexts(AdminDefinition, intl), idx);
-
-    addToIndex(getPluginEntries(plugins), idx);
-
-    return idx;
-}
-
-function addToIndex(entries, idx) {
-    for (const key of Object.keys(entries)) {
+    const mappingSectionsToTexts = adminDefinitionsToUrlsAndTexts(adminDefinition, intl);
+    for (const key of Object.keys(mappingSectionsToTexts)) {
         let text = '';
-        for (const str of entries[key]) {
+        for (const str of mappingSectionsToTexts[key]) {
             text += ' ' + str;
         }
         idx.add(key, text);
     }
+    return idx;
 }
 

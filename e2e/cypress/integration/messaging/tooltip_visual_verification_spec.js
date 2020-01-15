@@ -8,15 +8,34 @@
 // ***************************************************************
 import * as TIMEOUTS from '../../fixtures/timeouts';
 
-describe('Messaging', () => {
+// Username of a test user that you want to start a DM with
+let username = '';
+
+// Function to hover over individual items
+function hoverOverItem(postId, iconName, tooltipName, tooltipText, location = 'CENTER') {
+    // # Get the latest post and hover over it
+    cy.get(`#post_${postId}`).trigger('mouseover');
+
+    // # Hover on the icon that you want to test
+    cy.get(`#${location}_${iconName}_${postId}`).trigger('mouseover', {
+        force: true,
+    });
+
+    // * When hovering on icon, tooltip should appear and text should be valid
+    cy.get(`${tooltipName}`).find('span').should('have.text', tooltipText);
+}
+
+describe('M18697 - Visual verification of tooltips on post hover menu', () => {
     before(() => {
         // # Login as user-1
         cy.apiLogin('user-1');
 
         // # Use the API to create a new user
         cy.createNewUser().then((res) => {
+            username = res.username;
+
             // # Start DM with new user
-            cy.visit(`/ad-1/messages/@${res.username}`);
+            cy.visit(`/ad-1/messages/@${username}`);
         });
 
         // # Wait a few ms for the user to be created before sending the test message
@@ -26,23 +45,21 @@ describe('Messaging', () => {
         cy.postMessage('Test');
     });
 
-    it('M18697 - Visual verification of tooltips on post hover menu', () => {
+    it('Check dotmenu icon tooltip', () => {
         cy.getLastPostId().then((postId) => {
-            verifyToolTip(postId, `#CENTER_button_${postId}`, 'More Actions');
-
-            verifyToolTip(postId, `#CENTER_reaction_${postId}`, 'Add Reaction');
-
-            verifyToolTip(postId, `#CENTER_commentIcon_${postId}`, 'Reply');
+            hoverOverItem(postId, 'button', '#dotmenu-icon-tooltip', 'More Actions');
         });
     });
 
-    function verifyToolTip(postId, targetElement, label) {
-        cy.get(`#post_${postId}`).trigger('mouseover');
+    it('Check reaction icon tooltip', () => {
+        cy.getLastPostId().then((postId) => {
+            hoverOverItem(postId, 'reaction', '#reaction-icon-tooltip', 'Add Reaction');
+        });
+    });
 
-        cy.get(targetElement).trigger('mouseover', {force: true});
-        cy.findByText(label).should('be.visible');
-
-        cy.get(targetElement).trigger('mouseout', {force: true});
-        cy.findByText(label).should('not.be.visible');
-    }
+    it('Check comment icon tooltip', () => {
+        cy.getLastPostId().then((postId) => {
+            hoverOverItem(postId, 'commentIcon', '#comment-icon-tooltip', 'Reply');
+        });
+    });
 });

@@ -2,40 +2,34 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {FormattedMessage, injectIntl} from 'react-intl';
+import {FormattedMessage, intlShape} from 'react-intl';
 import {PropTypes} from 'prop-types';
 import {Permissions} from 'mattermost-redux/constants';
 
 import TeamPermissionGate from 'components/permissions_gates/team_permission_gate';
-import {intlShape} from 'utils/react_intl';
 
-class ChannelMore extends React.PureComponent {
+export default class ChannelMore extends React.PureComponent {
     static propTypes = {
         currentTeamId: PropTypes.string.isRequired,
-        intl: intlShape.isRequired,
         sectionType: PropTypes.string.isRequired,
         moreChannels: PropTypes.func.isRequired,
         moreDirectMessages: PropTypes.func.isRequired,
         browsePublicDirectChannels: PropTypes.func.isRequired,
-        viewArchivedChannels: PropTypes.bool,
     };
 
-    moreChannelsPublic = () => {
-        this.props.moreChannels('public');
-    }
-    moreChannelsPrivate = () => {
-        this.props.moreChannels('private');
-    }
+    static contextTypes = {
+        intl: intlShape,
+    };
 
     render() {
         const {
             sectionType,
+            moreChannels,
             moreDirectMessages,
             browsePublicDirectChannels,
-            viewArchivedChannels,
         } = this.props;
 
-        const {formatMessage} = this.props.intl;
+        const {formatMessage} = this.context.intl;
 
         switch (sectionType) {
         case 'public':
@@ -46,13 +40,13 @@ class ChannelMore extends React.PureComponent {
                 >
                     <li
                         key='public-channel-more'
-                        data-testid='morePublicButton'
+                        id='morePublicButton'
                     >
                         <button
-                            id='sidebarPublicChannelsMore'
+                            id='sidebarChannelsMore'
                             aria-label={formatMessage({id: 'sidebar.morePublicAria', defaultMessage: 'more public channels'})}
                             className='nav-more cursor--pointer style--none btn--block'
-                            onClick={this.moreChannelsPublic}
+                            onClick={moreChannels}
                         >
                             <FormattedMessage
                                 id='sidebar.moreElips'
@@ -62,33 +56,6 @@ class ChannelMore extends React.PureComponent {
                     </li>
                 </TeamPermissionGate>
             );
-        case 'private':
-            if (viewArchivedChannels) {
-                return (
-                    <TeamPermissionGate
-                        teamId={this.props.currentTeamId}
-                        permissions={[Permissions.JOIN_PUBLIC_CHANNELS]}
-                    >
-                        <li
-                            key='public-channel-more'
-                            data-testid='morePublicButton'
-                        >
-                            <button
-                                id='sidebarPrivateChannelsMore'
-                                aria-label={formatMessage({id: 'sidebar.morePublicAria', defaultMessage: 'more public channels'})}
-                                className='nav-more cursor--pointer style--none btn--block'
-                                onClick={this.moreChannelsPrivate}
-                            >
-                                <FormattedMessage
-                                    id='sidebar.moreElips'
-                                    defaultMessage='More...'
-                                />
-                            </button>
-                        </li>
-                    </TeamPermissionGate>
-                );
-            }
-            return null;
         case 'direct':
             return (
                 <li
@@ -133,5 +100,3 @@ class ChannelMore extends React.PureComponent {
         return null;
     }
 }
-
-export default injectIntl(ChannelMore);

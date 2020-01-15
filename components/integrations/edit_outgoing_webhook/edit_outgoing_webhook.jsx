@@ -32,6 +32,11 @@ export default class EditOutgoingWebhook extends React.PureComponent {
          */
         hookId: PropTypes.string.isRequired,
 
+        /**
+         * The request state for updateOutgoingHook action. Contains status and error
+         */
+        updateOutgoingHookRequest: PropTypes.object.isRequired,
+
         actions: PropTypes.shape({
 
             /**
@@ -112,7 +117,7 @@ export default class EditOutgoingWebhook extends React.PureComponent {
     submitHook = async () => {
         this.setState({serverError: ''});
 
-        const {data, error} = await this.props.actions.updateOutgoingHook(this.newHook);
+        const {data} = await this.props.actions.updateOutgoingHook(this.newHook);
 
         if (data) {
             browserHistory.push(`/${this.props.team.name}/integrations/outgoing_webhooks`);
@@ -121,8 +126,8 @@ export default class EditOutgoingWebhook extends React.PureComponent {
 
         this.setState({showConfirmModal: false});
 
-        if (error) {
-            this.setState({serverError: error.message});
+        if (this.props.updateOutgoingHookRequest.error) {
+            this.setState({serverError: this.props.updateOutgoingHookRequest.error.message});
         }
     }
 

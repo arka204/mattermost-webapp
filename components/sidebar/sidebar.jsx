@@ -4,7 +4,7 @@
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {FormattedMessage, injectIntl} from 'react-intl';
+import {FormattedMessage, intlShape} from 'react-intl';
 import {PropTypes} from 'prop-types';
 import classNames from 'classnames';
 
@@ -15,7 +15,6 @@ import {trackEvent} from 'actions/diagnostics_actions.jsx';
 import {redirectUserToDefaultTeam} from 'actions/global_actions';
 import * as ChannelUtils from 'utils/channel_utils.jsx';
 import {Constants, ModalIdentifiers, SidebarChannelGroups} from 'utils/constants';
-import {intlShape} from 'utils/react_intl';
 import * as Utils from 'utils/utils.jsx';
 import {t} from 'utils/i18n';
 import favicon from 'images/favicon/favicon-16x16.png';
@@ -58,7 +57,7 @@ export function renderThumbVertical(props) {
         />);
 }
 
-class Sidebar extends React.PureComponent {
+export default class Sidebar extends React.PureComponent {
     static propTypes = {
 
         /**
@@ -114,8 +113,6 @@ class Sidebar extends React.PureComponent {
          */
         currentUser: PropTypes.object,
 
-        intl: intlShape.isRequired,
-
         /**
          * Number of unread mentions/messages
          */
@@ -136,11 +133,6 @@ class Sidebar extends React.PureComponent {
          */
         channelSwitcherOption: PropTypes.bool.isRequired,
 
-        /**
-         * Setting that enables user to view archived channels
-         */
-        viewArchivedChannels: PropTypes.bool,
-
         actions: PropTypes.shape({
             close: PropTypes.func.isRequired,
             switchToChannelById: PropTypes.func.isRequired,
@@ -151,6 +143,10 @@ class Sidebar extends React.PureComponent {
     static defaultProps = {
         currentChannel: {},
     }
+
+    static contextTypes = {
+        intl: intlShape.isRequired,
+    };
 
     constructor(props) {
         super(props);
@@ -169,7 +165,6 @@ class Sidebar extends React.PureComponent {
             showDirectChannelsModal: false,
             showMoreChannelsModal: false,
             showMorePublicChannelsModal: false,
-            morePublicChannelsModalType: 'public',
         };
 
         this.animate = new SpringSystem();
@@ -216,11 +211,6 @@ class Sidebar extends React.PureComponent {
         // reset the scrollbar upon switching teams
         if (this.props.currentTeam !== prevProps.currentTeam) {
             this.refs.scrollbar.scrollToTop();
-        }
-
-        // Scroll to selected channel so it's in view
-        if (this.props.currentChannel.id !== prevProps.currentChannel.id) {
-            this.updateScrollbarOnChannelChange(this.props.currentChannel.id);
         }
 
         // close the LHS on mobile when you change channels
@@ -306,7 +296,7 @@ class Sidebar extends React.PureComponent {
             currentTeammate,
             unreads,
         } = this.props;
-        const {formatMessage} = this.props.intl;
+        const {formatMessage} = this.context.intl;
 
         const currentSiteName = config.SiteName || '';
 
@@ -399,11 +389,9 @@ class Sidebar extends React.PureComponent {
     }
 
     updateScrollbarOnChannelChange = (channelId) => {
-        if (this.refs[channelId] && this.refs[channelId].getWrappedInstance().getWrappedInstance().refs.channel) {
-            const curChannel = this.refs[channelId].getWrappedInstance().getWrappedInstance().refs.channel.getBoundingClientRect();
-            if ((curChannel.top - Constants.CHANNEL_SCROLL_ADJUSTMENT < 0) || (curChannel.top + curChannel.height > this.refs.scrollbar.view.getBoundingClientRect().height)) {
-                this.refs.scrollbar.scrollTop(this.refs.scrollbar.view.scrollTop + (curChannel.top - Constants.CHANNEL_SCROLL_ADJUSTMENT));
-            }
+        const curChannel = this.refs[channelId].getWrappedInstance().refs.channel.getBoundingClientRect();
+        if ((curChannel.top - Constants.CHANNEL_SCROLL_ADJUSTMENT < 0) || (curChannel.top + curChannel.height > this.refs.scrollbar.view.getBoundingClientRect().height)) {
+            this.refs.scrollbar.scrollTop(this.refs.scrollbar.view.scrollTop + (curChannel.top - Constants.CHANNEL_SCROLL_ADJUSTMENT));
         }
     }
 
@@ -507,8 +495,8 @@ class Sidebar extends React.PureComponent {
         this.showNewChannelModal(Constants.OPEN_CHANNEL);
     }
 
-    showMoreChannelsModal = (type) => {
-        this.setState({showMoreChannelsModal: true, morePublicChannelsModalType: type});
+    showMoreChannelsModal = () => {
+        this.setState({showMoreChannelsModal: true});
         trackEvent('ui', 'ui_channels_more_public');
     }
 
@@ -601,6 +589,7 @@ class Sidebar extends React.PureComponent {
                             <ul
                                 key={section.type}
                                 aria-label={ariaLabel}
+                                role='presentation'
                                 className='nav nav-pills nav-stacked a11y__section'
                                 id={sectionId + 'List'}
                                 tabIndex='-1'
@@ -633,7 +622,6 @@ class Sidebar extends React.PureComponent {
                                     moreChannels={this.showMoreChannelsModal}
                                     moreDirectMessages={this.handleOpenMoreDirectChannelsModal}
                                     browsePublicDirectChannels={this.showMorePublicDirectChannelsModal}
-                                    viewArchivedChannels={this.props.viewArchivedChannels}
                                 />
                             </ul>
                         );
@@ -696,7 +684,6 @@ class Sidebar extends React.PureComponent {
                         this.hideMoreChannelsModal();
                         this.showNewChannelModal(Constants.OPEN_CHANNEL);
                     }}
-                    morePublicChannelsModalType={this.state.morePublicChannelsModalType}
                 />
             );
         }
@@ -800,5 +787,3 @@ class Sidebar extends React.PureComponent {
         );
     }
 }
-
-export default injectIntl(Sidebar);

@@ -4,11 +4,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {FormattedMessage, injectIntl} from 'react-intl';
+import {FormattedMessage, intlShape} from 'react-intl';
 
 import {isLicenseExpired, isLicenseExpiring, isLicensePastGracePeriod} from 'utils/license_utils.jsx';
 import {AnnouncementBarTypes, AnnouncementBarMessages} from 'utils/constants';
-import {intlShape} from 'utils/react_intl';
 
 import {t} from 'utils/i18n';
 
@@ -19,10 +18,9 @@ import TextDismissableBar from '../text_dismissable_bar';
 
 const RENEWAL_LINK = 'https://licensing.mattermost.com/renew';
 
-class ConfigurationAnnouncementBar extends React.PureComponent {
+export default class ConfigurationAnnouncementBar extends React.PureComponent {
     static propTypes = {
         config: PropTypes.object,
-        intl: intlShape.isRequired,
         license: PropTypes.object,
         user: PropTypes.object,
         canViewSystemErrors: PropTypes.bool.isRequired,
@@ -32,6 +30,10 @@ class ConfigurationAnnouncementBar extends React.PureComponent {
         actions: PropTypes.shape({
             dismissNotice: PropTypes.func.isRequired,
         }).isRequired,
+    };
+
+    static contextTypes = {
+        intl: intlShape,
     };
 
     dismissExpiringLicense = () => {
@@ -112,7 +114,7 @@ class ConfigurationAnnouncementBar extends React.PureComponent {
             }
         }
 
-        const {formatMessage} = this.props.intl;
+        const {formatMessage} = this.context.intl;
 
         if (this.props.config.SendEmailNotifications !== 'true' &&
             this.props.config.EnablePreviewModeBanner === 'true'
@@ -149,7 +151,6 @@ class ConfigurationAnnouncementBar extends React.PureComponent {
                 <TextDismissableBar
                     allowDismissal={true}
                     text={siteURLMessage}
-                    siteURL={this.props.siteURL}
                     type={AnnouncementBarTypes.ANNOUNCEMENT}
                 />
             );
@@ -158,5 +159,3 @@ class ConfigurationAnnouncementBar extends React.PureComponent {
         return null;
     }
 }
-
-export default injectIntl(ConfigurationAnnouncementBar);

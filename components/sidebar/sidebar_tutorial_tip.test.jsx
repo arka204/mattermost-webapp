@@ -7,41 +7,36 @@ import {shallow} from 'enzyme';
 import SidebarTutorialTip from 'components/sidebar/sidebar_tutorial_tip.jsx';
 
 describe('component/sidebar/SidebarTutorialTip', () => {
-    const defaultProps = {
-        openLhs: jest.fn(),
-    };
-
     test('should match snapshot, without townSquare and without offTopic', () => {
-        const props = {...defaultProps};
-        const wrapper = shallow(<SidebarTutorialTip {...props}/>);
+        const wrapper = shallow(<SidebarTutorialTip/>);
         expect(wrapper).toMatchSnapshot();
-        expect(props.openLhs).not.toBeCalled();
     });
 
     test('should match snapshot, with townSquare and without offTopic', () => {
-        const props = {...defaultProps, townSquareDisplayName: 'TestTownSquare'};
         const wrapper = shallow(
-            <SidebarTutorialTip {...props}/>
+            <SidebarTutorialTip
+                townSquareDisplayName={'TestTownSquare'}
+            />
         );
         expect(wrapper).toMatchSnapshot();
-        expect(props.openLhs).toBeCalled();
     });
 
     test('should match snapshot, without townSquare and with offTopic', () => {
-        const props = {...defaultProps, offTopicDisplayName: 'TestOffTopic'};
         const wrapper = shallow(
-            <SidebarTutorialTip {...props}/>
+            <SidebarTutorialTip
+                offTopicDisplayName={'TestOffTopic'}
+            />
         );
         expect(wrapper).toMatchSnapshot();
-        expect(props.openLhs).toBeCalled();
     });
 
     test('should match snapshot, with townSquare and with offTopic', () => {
-        const props = {...defaultProps, townSquareDisplayName: 'TestTownSquare', offTopicDisplayName: 'TestOffTopic'};
         const wrapper = shallow(
-            <SidebarTutorialTip {...props}/>
+            <SidebarTutorialTip
+                townSquareDisplayName={'TestTownSquare'}
+                offTopicDisplayName={'TestOffTopic'}
+            />
         );
         expect(wrapper).toMatchSnapshot();
-        expect(props.openLhs).toBeCalled();
     });
 });

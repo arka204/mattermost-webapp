@@ -222,13 +222,6 @@ exports[`components/admin_console/permission_schemes_settings/permission_team_sc
   >
     <SaveButton
       btnClass="btn-primary"
-      defaultMessage={
-        <FormattedMessage
-          defaultMessage="Save"
-          id="save_button.save"
-          values={Object {}}
-        />
-      }
       disabled={true}
       extraClasses=""
       onClick={[Function]}
@@ -489,13 +482,6 @@ exports[`components/admin_console/permission_schemes_settings/permission_team_sc
   >
     <SaveButton
       btnClass="btn-primary"
-      defaultMessage={
-        <FormattedMessage
-          defaultMessage="Save"
-          id="save_button.save"
-          values={Object {}}
-        />
-      }
       disabled={true}
       extraClasses=""
       onClick={[Function]}
@@ -762,13 +748,6 @@ exports[`components/admin_console/permission_schemes_settings/permission_team_sc
   >
     <SaveButton
       btnClass="btn-primary"
-      defaultMessage={
-        <FormattedMessage
-          defaultMessage="Save"
-          id="save_button.save"
-          values={Object {}}
-        />
-      }
       disabled={true}
       extraClasses=""
       onClick={[Function]}
@@ -1039,13 +1018,6 @@ exports[`components/admin_console/permission_schemes_settings/permission_team_sc
   >
     <SaveButton
       btnClass="btn-primary"
-      defaultMessage={
-        <FormattedMessage
-          defaultMessage="Save"
-          id="save_button.save"
-          values={Object {}}
-        />
-      }
       disabled={true}
       extraClasses=""
       onClick={[Function]}

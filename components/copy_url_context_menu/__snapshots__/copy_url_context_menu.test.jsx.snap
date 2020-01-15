@@ -10,15 +10,11 @@ exports[`components/CopyUrlContextMenu should copy absolute url on click 1`] = `
     onHide={[Function]}
     onMouseLeave={[Function]}
     onShow={[Function]}
-    preventHideOnContextMenu={false}
-    preventHideOnResize={false}
-    preventHideOnScroll={false}
     rtl={false}
     style={Object {}}
   >
     <MenuItem
       attributes={Object {}}
-      className=""
       data={Object {}}
       disabled={false}
       divider={false}
@@ -42,7 +38,6 @@ exports[`components/CopyUrlContextMenu should copy absolute url on click 1`] = `
     disableIfShiftIsPressed={false}
     holdToDisplay={-1}
     id="copy-url-context-menuresource"
-    mouseButton={2}
     posX={0}
     posY={0}
     renderTag="div"
@@ -64,15 +59,11 @@ exports[`components/CopyUrlContextMenu should copy relative url on click 1`] = `
     onHide={[Function]}
     onMouseLeave={[Function]}
     onShow={[Function]}
-    preventHideOnContextMenu={false}
-    preventHideOnResize={false}
-    preventHideOnScroll={false}
     rtl={false}
     style={Object {}}
   >
     <MenuItem
       attributes={Object {}}
-      className=""
       data={Object {}}
       disabled={false}
       divider={false}
@@ -96,7 +87,6 @@ exports[`components/CopyUrlContextMenu should copy relative url on click 1`] = `
     disableIfShiftIsPressed={false}
     holdToDisplay={-1}
     id="copy-url-context-menuresource"
-    mouseButton={2}
     posX={0}
     posY={0}
     renderTag="div"

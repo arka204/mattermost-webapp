@@ -190,14 +190,7 @@ export default class SettingItemMax extends React.PureComponent {
         }
 
         if (this.props.extraInfo) {
-            extraInfo = (
-                <div
-                    id='extraInfo'
-                    className={hintClass}
-                >
-                    {this.props.extraInfo}
-                </div>
-            );
+            extraInfo = (<div className={hintClass}>{this.props.extraInfo}</div>);
         }
 
         let submit = '';
@@ -225,28 +218,31 @@ export default class SettingItemMax extends React.PureComponent {
         let title;
         if (this.props.title) {
             title = (
-                <h4
+                <li
                     id='settingTitle'
                     className='col-sm-12 section-title'
                 >
                     {this.props.title}
-                </h4>
+                </li>
             );
         }
 
         let listContent = (
-            <div className='setting-list-item'>
+            <li
+                className='setting-list-item'
+                role='presentation'
+            >
                 {inputs}
                 {extraInfo}
-            </div>
+            </li>
         );
 
         if (this.props.infoPosition === 'top') {
             listContent = (
-                <div>
+                <li role='presentation'>
                     {extraInfo}
                     {inputs}
-                </div>
+                </li>
             );
         }
 
@@ -263,18 +259,19 @@ export default class SettingItemMax extends React.PureComponent {
         }
 
         return (
-            <section
+            <ul
                 className={`section-max form-horizontal ${this.props.containerStyle}`}
             >
                 {title}
-                <div className={widthClass}>
-                    <div
+                <li className={widthClass}>
+                    <ul
                         tabIndex='-1'
                         ref={this.settingList}
+                        role='presentation'
                         className='setting-list'
                     >
                         {listContent}
-                        <div className='setting-list-item'>
+                        <li className='setting-list-item'>
                             <hr/>
                             {this.props.submitExtra}
                             {serverError}
@@ -287,10 +284,10 @@ export default class SettingItemMax extends React.PureComponent {
                             >
                                 {cancelButtonText}
                             </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         );
     }
 }

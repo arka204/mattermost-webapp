@@ -7,6 +7,7 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
+import {isMobile} from 'utils/utils.jsx';
 import ActivityLog from 'components/activity_log_modal/components/activity_log.jsx';
 import LoadingScreen from 'components/loading_screen';
 
@@ -71,6 +72,9 @@ export default class ActivityLogModal extends React.PureComponent {
 
     onShow = () => {
         this.props.actions.getSessions(this.props.currentUserId);
+        if (!isMobile()) {
+            $('.modal-body').perfectScrollbar();
+        }
     }
 
     onHide = () => {
@@ -127,7 +131,7 @@ export default class ActivityLogModal extends React.PureComponent {
                         />
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body ref='modalBody'>
                     <p className='session-help-text'>
                         <FormattedMessage
                             id='activity_log.sessionsDescription'

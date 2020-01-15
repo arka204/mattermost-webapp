@@ -22,6 +22,7 @@ export default class RhsPlugin extends React.PureComponent {
             <div
                 id='rhsContainer'
                 className='sidebar-right__body'
+                ref='sidebarbody'
             >
                 <SearchResultsHeader>
                     {this.props.title}

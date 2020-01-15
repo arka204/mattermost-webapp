@@ -4,6 +4,7 @@
 import React from 'react';
 import {Client4} from 'mattermost-redux/client';
 
+import {autocompleteUsers} from 'actions/user_actions.jsx';
 import * as Utils from 'utils/utils.jsx';
 
 import GuestBadge from 'components/widgets/badges/guest_badge';
@@ -37,7 +38,6 @@ class UserSuggestion extends Suggestion {
             <div
                 className={className}
                 onClick={this.handleClick}
-                onMouseMove={this.handleMouseMove}
                 {...Suggestion.baseProps}
             >
                 <Avatar
@@ -60,28 +60,27 @@ class UserSuggestion extends Suggestion {
 }
 
 export default class UserProvider extends Provider {
-    constructor(searchUsersFunc) {
-        super();
-        this.autocompleteUsers = searchUsersFunc;
-    }
-    async handlePretextChanged(pretext, resultsCallback) {
+    handlePretextChanged(pretext, resultsCallback) {
         const normalizedPretext = pretext.toLowerCase();
         this.startNewRequest(normalizedPretext);
 
-        const data = await this.autocompleteUsers(normalizedPretext);
+        autocompleteUsers(
+            normalizedPretext,
+            (data) => {
+                if (this.shouldCancelDispatch(normalizedPretext)) {
+                    return;
+                }
 
-        if (this.shouldCancelDispatch(normalizedPretext)) {
-            return false;
-        }
+                const users = Object.assign([], data.users);
 
-        const users = Object.assign([], data.users);
-
-        resultsCallback({
-            matchedPretext: normalizedPretext,
-            terms: users.map((user) => user.username),
-            items: users,
-            component: UserSuggestion,
-        });
+                resultsCallback({
+                    matchedPretext: normalizedPretext,
+                    terms: users.map((user) => user.username),
+                    items: users,
+                    component: UserSuggestion,
+                });
+            }
+        );
 
         return true;
     }

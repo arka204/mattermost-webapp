@@ -8,10 +8,10 @@ import Constants from 'utils/constants';
 import * as Utils from 'utils/utils.jsx';
 import {t} from 'utils/i18n';
 
-import AdminSettings from './admin_settings';
-import Setting from './setting';
+import AdminSettings from './admin_settings.jsx';
+import Setting from './setting.jsx';
 import SettingsGroup from './settings_group.jsx';
-import TextSetting from './text_setting';
+import TextSetting from './text_setting.jsx';
 
 export default class PasswordSettings extends AdminSettings {
     constructor(props) {

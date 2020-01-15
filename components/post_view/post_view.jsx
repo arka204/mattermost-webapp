@@ -67,15 +67,13 @@ export default class PostView extends React.PureComponent {
         }
 
         return (
-            <div id='post-list'>
-                <PostList
-                    unreadChunkTimeStamp={this.state.unreadChunkTimeStamp}
-                    channelId={this.props.channelId}
-                    changeUnreadChunkTimeStamp={this.changeUnreadChunkTimeStamp}
-                    focusedPostId={this.props.focusedPostId}
-                    prevChannelId={this.props.prevChannelId}
-                />
-            </div>
+            <PostList
+                unreadChunkTimeStamp={this.state.unreadChunkTimeStamp}
+                channelId={this.props.channelId}
+                changeUnreadChunkTimeStamp={this.changeUnreadChunkTimeStamp}
+                focusedPostId={this.props.focusedPostId}
+                prevChannelId={this.props.prevChannelId}
+            />
         );
     }
 }

@@ -3,10 +3,8 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Tooltip} from 'react-bootstrap';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
-
-import OverlayTrigger from 'components/overlay_trigger';
 
 import * as Utils from 'utils/utils.jsx';
 
@@ -93,7 +91,7 @@ export default class Reaction extends React.PureComponent {
         this.props.actions.removeReaction(this.props.post.id, this.props.emojiName);
     }
 
-    loadMissingProfiles = async () => {
+    loadMissingProfiles = () => {
         const ids = this.props.reactions.map((reaction) => reaction.user_id);
         this.props.actions.getMissingProfilesByIds(ids);
     }
@@ -253,7 +251,7 @@ export default class Reaction extends React.PureComponent {
                 onClick={handleClick}
             >
                 <OverlayTrigger
-                    delayShow={500}
+                    delayShow={1000}
                     placement='top'
                     shouldUpdatePosition={true}
                     overlay={

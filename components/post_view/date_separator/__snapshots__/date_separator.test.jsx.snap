@@ -36,7 +36,6 @@ exports[`components/post_view/DateSeparator should render date with timezone ena
   <BasicSeparator>
     <div
       className="Separator BasicSeparator"
-      data-testid="basicSeparator"
     >
       <hr
         className="separator__hr"
@@ -44,7 +43,7 @@ exports[`components/post_view/DateSeparator should render date with timezone ena
       <div
         className="separator__text"
       >
-        <InjectIntl(RecentDate)
+        <RecentDate
           day="2-digit"
           month="short"
           timeZone="Australia/Sydney"
@@ -52,44 +51,19 @@ exports[`components/post_view/DateSeparator should render date with timezone ena
           weekday="short"
           year="numeric"
         >
-          <RecentDate
+          <FormattedDate
             day="2-digit"
-            intl={
-              Object {
-                "defaultFormats": Object {},
-                "defaultLocale": "en",
-                "formatDate": [Function],
-                "formatHTMLMessage": [Function],
-                "formatMessage": [Function],
-                "formatNumber": [Function],
-                "formatPlural": [Function],
-                "formatRelative": [Function],
-                "formatTime": [Function],
-                "formats": Object {},
-                "formatters": Object {
-                  "getDateTimeFormat": [Function],
-                  "getMessageFormat": [Function],
-                  "getNumberFormat": [Function],
-                  "getPluralFormat": [Function],
-                  "getRelativeFormat": [Function],
-                },
-                "locale": "en",
-                "messages": Object {},
-                "now": [Function],
-                "onError": [Function],
-                "textComponent": "span",
-                "timeZone": "Etc/UTC",
-              }
-            }
             month="short"
             timeZone="Australia/Sydney"
             value={2018-01-12T20:15:13.000Z}
             weekday="short"
             year="numeric"
           >
-            Sat, Jan 13, 2018
-          </RecentDate>
-        </InjectIntl(RecentDate)>
+            <span>
+              Sat, Jan 13, 2018
+            </span>
+          </FormattedDate>
+        </RecentDate>
       </div>
     </div>
   </BasicSeparator>
@@ -130,7 +104,6 @@ exports[`components/post_view/DateSeparator should render date without timezone 
   <BasicSeparator>
     <div
       className="Separator BasicSeparator"
-      data-testid="basicSeparator"
     >
       <hr
         className="separator__hr"
@@ -138,50 +111,25 @@ exports[`components/post_view/DateSeparator should render date without timezone 
       <div
         className="separator__text"
       >
-        <InjectIntl(RecentDate)
+        <RecentDate
           day="2-digit"
           month="short"
           value={2018-01-12T12:15:13.000Z}
           weekday="short"
           year="numeric"
         >
-          <RecentDate
+          <FormattedDate
             day="2-digit"
-            intl={
-              Object {
-                "defaultFormats": Object {},
-                "defaultLocale": "en",
-                "formatDate": [Function],
-                "formatHTMLMessage": [Function],
-                "formatMessage": [Function],
-                "formatNumber": [Function],
-                "formatPlural": [Function],
-                "formatRelative": [Function],
-                "formatTime": [Function],
-                "formats": Object {},
-                "formatters": Object {
-                  "getDateTimeFormat": [Function],
-                  "getMessageFormat": [Function],
-                  "getNumberFormat": [Function],
-                  "getPluralFormat": [Function],
-                  "getRelativeFormat": [Function],
-                },
-                "locale": "en",
-                "messages": Object {},
-                "now": [Function],
-                "onError": [Function],
-                "textComponent": "span",
-                "timeZone": "Etc/UTC",
-              }
-            }
             month="short"
             value={2018-01-12T12:15:13.000Z}
             weekday="short"
             year="numeric"
           >
-            Fri, Jan 12, 2018
-          </RecentDate>
-        </InjectIntl(RecentDate)>
+            <span>
+              Fri, Jan 12, 2018
+            </span>
+          </FormattedDate>
+        </RecentDate>
       </div>
     </div>
   </BasicSeparator>
@@ -224,7 +172,6 @@ exports[`components/post_view/DateSeparator should render date without timezone 
   <BasicSeparator>
     <div
       className="Separator BasicSeparator"
-      data-testid="basicSeparator"
     >
       <hr
         className="separator__hr"
@@ -232,50 +179,25 @@ exports[`components/post_view/DateSeparator should render date without timezone 
       <div
         className="separator__text"
       >
-        <InjectIntl(RecentDate)
+        <RecentDate
           day="2-digit"
           month="short"
           value={2018-01-12T12:15:13.000Z}
           weekday="short"
           year="numeric"
         >
-          <RecentDate
+          <FormattedDate
             day="2-digit"
-            intl={
-              Object {
-                "defaultFormats": Object {},
-                "defaultLocale": "en",
-                "formatDate": [Function],
-                "formatHTMLMessage": [Function],
-                "formatMessage": [Function],
-                "formatNumber": [Function],
-                "formatPlural": [Function],
-                "formatRelative": [Function],
-                "formatTime": [Function],
-                "formats": Object {},
-                "formatters": Object {
-                  "getDateTimeFormat": [Function],
-                  "getMessageFormat": [Function],
-                  "getNumberFormat": [Function],
-                  "getPluralFormat": [Function],
-                  "getRelativeFormat": [Function],
-                },
-                "locale": "en",
-                "messages": Object {},
-                "now": [Function],
-                "onError": [Function],
-                "textComponent": "span",
-                "timeZone": "Etc/UTC",
-              }
-            }
             month="short"
             value={2018-01-12T12:15:13.000Z}
             weekday="short"
             year="numeric"
           >
-            Fri, Jan 12, 2018
-          </RecentDate>
-        </InjectIntl(RecentDate)>
+            <span>
+              Fri, Jan 12, 2018
+            </span>
+          </FormattedDate>
+        </RecentDate>
       </div>
     </div>
   </BasicSeparator>

@@ -51,15 +51,17 @@ export default class LineChart extends React.PureComponent<Props> {
         this.initChart();
     }
 
-    public componentDidUpdate(prevProps: Props): void {
-        const currentData = this.props.data && this.props.data.labels.length > 0;
+    public UNSAFE_componentWillUpdate(nextProps: Props): void { // eslint-disable-line camelcase
+        const willHaveData = nextProps.data && nextProps.data.labels.length > 0;
 
-        if (!currentData && this.chart) {
+        if (!willHaveData && this.chart) {
             // Clean up the rendered chart before we render and destroy its context
             this.chart.destroy();
             this.chart = null;
         }
+    }
 
+    public componentDidUpdate(prevProps: Props): void {
         if (Utils.areObjectsEqual(prevProps.data, this.props.data)) {
             return;
         }

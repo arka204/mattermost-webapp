@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Scrollbars from 'react-custom-scrollbars';
 
-import {injectIntl} from 'react-intl';
+import {injectIntl, intlShape} from 'react-intl';
 
 import {debounce} from 'mattermost-redux/actions/helpers';
 
-import {intlShape} from 'utils/react_intl';
 import * as Utils from 'utils/utils.jsx';
 
 import SearchResultsHeader from 'components/search_results_header';
@@ -235,7 +234,7 @@ class SearchResults extends React.Component {
                 sortedResults = results;
             }
 
-            ctls = sortedResults.map((post, index) => {
+            ctls = sortedResults.map((post) => {
                 return (
                     <SearchResultsItem
                         key={post.id}
@@ -244,7 +243,6 @@ class SearchResults extends React.Component {
                         matches={this.props.matches[post.id]}
                         term={(!this.props.isFlaggedPosts && !this.props.isPinnedPosts && !this.props.isMentionSearch) ? searchTerms : ''}
                         isMentionSearch={this.props.isMentionSearch}
-                        a11yIndex={index}
                     />
                 );
             }, this);
@@ -292,10 +290,7 @@ class SearchResults extends React.Component {
         }
 
         return (
-            <div
-                id='searchContainer'
-                className='sidebar-right__body'
-            >
+            <div className='sidebar-right__body'>
                 <SearchResultsHeader>
                     {formattedTitle}
                 </SearchResultsHeader>

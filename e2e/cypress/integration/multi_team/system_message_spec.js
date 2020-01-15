@@ -8,8 +8,6 @@
 // ***************************************************************
 /* eslint max-nested-callbacks: ["error", 4] */
 
-import * as TIMEOUTS from '../../fixtures/timeouts';
-
 function verifySystemMessage(post) {
     cy.get(post).
         invoke('attr', 'class').
@@ -41,9 +39,6 @@ describe('System message', () => {
                 {header: ' Updating header'.repeat(Math.floor(Math.random() * 10))}
             );
         });
-
-        // # Added to wait for the system message to get posted
-        cy.wait(TIMEOUTS.TINY);
     });
 
     const displayTypes = ['compact', 'clean'];

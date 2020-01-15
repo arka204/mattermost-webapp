@@ -25,15 +25,10 @@ exports[`components/user_settings/sidebar/UserSettingsSidebar should match snaps
       <div
         className="modal-back"
       >
-        <LocalizedIcon
+        <i
           className="fa fa-angle-left"
-          component="i"
-          title={
-            Object {
-              "defaultMessage": "Collapse Icon",
-              "id": "generic_icons.collapse",
-            }
-          }
+          onClick={[Function]}
+          title="Collapse Icon"
         />
       </div>
       <FormattedMessage

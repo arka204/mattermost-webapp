@@ -1,8 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {shallow} from 'enzyme';
 import React from 'react';
+
+import {shallowWithIntl} from 'tests/helpers/intl-test-helper.jsx';
 
 import ShouldVerifyEmail from './should_verify_email';
 
@@ -18,7 +19,7 @@ describe('components/ShouldVerifyEmail', () => {
     };
 
     it('should match snapshot', () => {
-        const wrapper = shallow(<ShouldVerifyEmail {...baseProps}/>);
+        const wrapper = shallowWithIntl(<ShouldVerifyEmail {...baseProps}/>);
         expect(wrapper).toMatchSnapshot();
     });
 
@@ -30,7 +31,7 @@ describe('components/ShouldVerifyEmail', () => {
             },
         };
 
-        const wrapper = shallow(<ShouldVerifyEmail {...props}/>);
+        const wrapper = shallowWithIntl(<ShouldVerifyEmail {...props}/>);
         wrapper.find('button').simulate('click');
 
         expect(props.actions.sendVerificationEmail).toHaveBeenCalledWith('test@example.com');

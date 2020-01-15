@@ -37,13 +37,13 @@ const AdminPanel: React.FC<Props> = (props: Props) => (
                         defaultMessage={props.titleDefault}
                     />
                 </h3>
-                <div className='margin-top'>
+                <span>
                     <FormattedMarkdownMessage
                         id={props.subtitleId}
                         defaultMessage={props.subtitleDefault}
                         values={props.subtitleValues}
                     />
-                </div>
+                </span>
             </div>
             {props.button &&
                 <div className='button'>

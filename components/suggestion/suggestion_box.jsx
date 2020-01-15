@@ -127,11 +127,6 @@ export default class SuggestionBox extends React.Component {
          * If true, listen for clicks on a mention and populate the input with said mention, defaults to false
          */
         listenForMentionKeyClick: PropTypes.bool,
-
-        /**
-         * Passes the wrapper reference for height calculation
-         */
-        wrapperHeight: PropTypes.number,
     }
 
     static defaultProps = {
@@ -180,8 +175,6 @@ export default class SuggestionBox extends React.Component {
             allowDividers: true,
             presentationType: 'text',
         };
-
-        this.inputRef = React.createRef();
     }
 
     componentDidMount() {
@@ -227,11 +220,11 @@ export default class SuggestionBox extends React.Component {
     }
 
     getTextbox = () => {
-        if (!this.inputRef.current) {
+        if (!this.refs.input) {
             return null;
         }
 
-        const input = this.inputRef.current.getInput();
+        const input = this.refs.input.getInput();
 
         if (input.getDOMNode) {
             return input.getDOMNode();
@@ -243,7 +236,7 @@ export default class SuggestionBox extends React.Component {
     recalculateSize = () => {
         // Pretty hacky way to force an AutosizeTextarea to recalculate its height if that's what
         // we're rendering as the input
-        const input = this.inputRef.current.getInput();
+        const input = this.refs.input.getInput();
 
         if (input.recalculateSize) {
             input.recalculateSize();
@@ -440,7 +433,7 @@ export default class SuggestionBox extends React.Component {
 
         this.clear();
 
-        this.inputRef.current.focus();
+        this.refs.input.focus();
 
         for (const provider of this.props.providers) {
             if (provider.handleCompleteWord) {
@@ -480,12 +473,6 @@ export default class SuggestionBox extends React.Component {
         });
     }
 
-    setSelection = (term) => {
-        this.setState({
-            selection: term,
-        });
-    }
-
     clear = () => {
         this.setState({
             cleared: true,
@@ -493,7 +480,6 @@ export default class SuggestionBox extends React.Component {
             terms: [],
             items: [],
             components: [],
-            selection: '',
         });
     }
 
@@ -616,7 +602,7 @@ export default class SuggestionBox extends React.Component {
     }
 
     blur = () => {
-        this.inputRef.current.blur();
+        this.refs.input.blur();
     }
 
     setContainerRef = (container) => {
@@ -663,7 +649,6 @@ export default class SuggestionBox extends React.Component {
         Reflect.deleteProperty(props, 'renderDividers');
         Reflect.deleteProperty(props, 'contextId');
         Reflect.deleteProperty(props, 'listenForMentionKeyClick');
-        Reflect.deleteProperty(props, 'wrapperHeight');
 
         // This needs to be upper case so React doesn't think it's an html tag
         const SuggestionListComponent = listComponent;
@@ -677,11 +662,11 @@ export default class SuggestionBox extends React.Component {
                 <div
                     ref={this.suggestionReadOut}
                     aria-live='polite'
-                    role='alert'
+                    role={UserAgent.isFirefox() ? '' : 'alert'}
                     className='sr-only'
                 />
                 <QuickInput
-                    ref={this.inputRef}
+                    ref='input'
                     autoComplete='off'
                     {...props}
                     onInput={this.handleChange}
@@ -692,6 +677,7 @@ export default class SuggestionBox extends React.Component {
                 />
                 {(this.props.openWhenEmpty || this.props.value.length >= this.props.requiredCharacters) && this.state.presentationType === 'text' &&
                     <SuggestionListComponent
+                        ref='list'
                         ariaLiveRef={this.suggestionReadOut}
                         open={this.state.focused}
                         pretext={this.pretext}
@@ -700,18 +686,17 @@ export default class SuggestionBox extends React.Component {
                         renderNoResults={renderNoResults}
                         onCompleteWord={this.handleCompleteWord}
                         preventClose={this.preventSuggestionListClose}
-                        onItemHover={this.setSelection}
                         cleared={this.state.cleared}
                         matchedPretext={this.state.matchedPretext}
                         items={this.state.items}
                         terms={this.state.terms}
                         selection={this.state.selection}
                         components={this.state.components}
-                        wrapperHeight={this.props.wrapperHeight}
                     />
                 }
                 {(this.props.openWhenEmpty || this.props.value.length >= this.props.requiredCharacters) && this.state.presentationType === 'date' &&
                     <SuggestionDateComponent
+                        ref='date'
                         items={this.state.items}
                         terms={this.state.terms}
                         components={this.state.components}

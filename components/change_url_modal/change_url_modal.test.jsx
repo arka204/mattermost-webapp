@@ -65,7 +65,7 @@ describe('components/ChangeURLModal', () => {
         const wrapper = mountWithIntl(
             <ChangeURLModal {...baseProps}/>
         );
-        const refURLInput = wrapper.find('input[type="text"]').instance();
+        const refURLInput = wrapper.ref('urlinput');
         refURLInput.value = 'urlexample';
 
         wrapper.instance().onSubmit({preventDefault: jest.fn()});
@@ -78,7 +78,7 @@ describe('components/ChangeURLModal', () => {
         const wrapper = mountWithIntl(
             <ChangeURLModal {...baseProps}/>
         );
-        const refURLInput = wrapper.find('input[type="text"]').instance();
+        const refURLInput = wrapper.ref('urlinput');
         refURLInput.value = value;
 
         wrapper.instance().onSubmit({preventDefault: jest.fn()});

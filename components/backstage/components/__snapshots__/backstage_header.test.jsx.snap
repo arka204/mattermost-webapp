@@ -12,15 +12,9 @@ exports[`components/backstage/components/BackstageHeader should match snapshot w
       className="backstage-header__divider"
       key="divider1"
     >
-      <LocalizedIcon
+      <i
         className="fa fa-angle-right"
-        component="i"
-        title={
-          Object {
-            "defaultMessage": "Breadcrumb Icon",
-            "id": "generic_icons.breadcrumb",
-          }
-        }
+        title="Breadcrumb Icon"
       />
     </span>
     <div>

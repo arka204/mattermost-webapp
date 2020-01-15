@@ -2,11 +2,10 @@
 
 exports[`components/ProfilePopover should hide add-to-channel option if not on team 1`] = `
 <Popover
+  bsClass="popover"
   id="user-profile-popover"
   isInCurrentTeam={false}
   placement="right"
-  popoverSize="sm"
-  popoverStyle="info"
   title={
     <span
       data-testid="profilePopoverTitle_some_username"
@@ -47,15 +46,9 @@ exports[`components/ProfilePopover should hide add-to-channel option if not on t
       href="#"
       onClick={[Function]}
     >
-      <LocalizedIcon
+      <i
         className="fa fa-paper-plane"
-        component="i"
-        title={
-          Object {
-            "defaultMessage": "Send Message Icon",
-            "id": "user_profile.send.dm.icon",
-          }
-        }
+        title="Send Message Icon"
       />
       <FormattedMessage
         defaultMessage="Send Message"
@@ -81,11 +74,10 @@ exports[`components/ProfilePopover should hide add-to-channel option if not on t
 
 exports[`components/ProfilePopover should match snapshot 1`] = `
 <Popover
+  bsClass="popover"
   id="user-profile-popover"
   isInCurrentTeam={true}
   placement="right"
-  popoverSize="sm"
-  popoverStyle="info"
   title={
     <span
       data-testid="profilePopoverTitle_some_username"
@@ -126,15 +118,9 @@ exports[`components/ProfilePopover should match snapshot 1`] = `
       href="#"
       onClick={[Function]}
     >
-      <LocalizedIcon
+      <i
         className="fa fa-paper-plane"
-        component="i"
-        title={
-          Object {
-            "defaultMessage": "Send Message Icon",
-            "id": "user_profile.send.dm.icon",
-          }
-        }
+        title="Send Message Icon"
       />
       <FormattedMessage
         defaultMessage="Send Message"
@@ -152,7 +138,7 @@ exports[`components/ProfilePopover should match snapshot 1`] = `
       className="text-nowrap"
       href="#"
     >
-      <Connect(InjectIntl(ModalToggleButtonRedux))
+      <Connect(ModalToggleButtonRedux)
         accessibilityLabel="Add to a Channel"
         dialogProps={
           Object {
@@ -167,18 +153,12 @@ exports[`components/ProfilePopover should match snapshot 1`] = `
         onClick={[MockFunction]}
         role="menuitem"
       >
-        <LocalizedIcon
+        <i
           className="fa fa-user-plus"
-          component="i"
-          title={
-            Object {
-              "defaultMessage": "Add User to Channel Icon",
-              "id": "user_profile.add_user_to_channel.icon",
-            }
-          }
+          title="Add User to Channel Icon"
         />
         Add to a Channel
-      </Connect(InjectIntl(ModalToggleButtonRedux))>
+      </Connect(ModalToggleButtonRedux)>
     </a>
   </div>
   <Connect(Pluggable)

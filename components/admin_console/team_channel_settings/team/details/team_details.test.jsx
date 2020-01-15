@@ -35,7 +35,6 @@ describe('admin_console/team_channel_settings/team/TeamDetails', () => {
                     unlinkGroupSyncable: jest.fn(),
                     getGroups: jest.fn().mockResolvedValue([]),
                     membersMinusGroupMembers: jest.fn(),
-                    patchGroupSyncable: jest.fn(),
                 }}
                 team={testTeam}
                 teamID={testTeam.id}

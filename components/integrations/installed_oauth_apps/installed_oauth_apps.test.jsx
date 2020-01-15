@@ -41,6 +41,10 @@ describe('components/integrations/InstalledOAuthApps', () => {
         team: {name: 'test'},
         oauthApps,
         canManageOauth: true,
+        regenOAuthAppSecretRequest: {
+            status: 'not_started',
+            error: null,
+        },
         actions: {
             loadOAuthAppsAndProfiles: jest.fn(),
             regenOAuthAppSecret: jest.fn(),

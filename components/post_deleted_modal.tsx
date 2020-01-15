@@ -23,7 +23,6 @@ export default class PostDeletedModal extends React.Component<Props> {
                 onHide={this.props.onHide}
                 role='dialog'
                 aria-labelledby='postDeletedModalLabel'
-                data-testid='postDeletedModal'
             >
                 <Modal.Header closeButton={true}>
                     <Modal.Title
@@ -50,7 +49,6 @@ export default class PostDeletedModal extends React.Component<Props> {
                         className='btn btn-primary'
                         autoFocus={true}
                         onClick={this.props.onHide}
-                        data-testid='postDeletedModalOkButton'
                     >
                         <FormattedMessage
                             id='post_delete.okay'

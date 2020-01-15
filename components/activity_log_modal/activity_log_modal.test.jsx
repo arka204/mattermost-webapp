@@ -3,6 +3,8 @@
 
 import React from 'react';
 import {shallow} from 'enzyme';
+import $ from 'jquery';
+require('perfect-scrollbar/jquery')($);
 
 import {General} from 'mattermost-redux/constants';
 
