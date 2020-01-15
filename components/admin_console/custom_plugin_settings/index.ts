@@ -11,11 +11,11 @@ import {t} from 'utils/i18n';
 import SchemaAdminSettings from '../schema_admin_settings';
 import {it} from '../admin_definition';
 
-import CustomPluginSettings from './custom_plugin_settings.jsx';
+import CustomPluginSettings from './custom_plugin_settings';
 
 function makeGetPluginSchema() {
     return createSelector(
-        (state, pluginId) => state.entities.admin.plugins[pluginId],
+        (state : any, pluginId : any) => state.entities.admin.plugins[pluginId],
         (plugin) => {
             if (!plugin) {
                 return null;
@@ -26,7 +26,7 @@ function makeGetPluginSchema() {
 
             let settings = [];
             if (plugin.settings_schema && plugin.settings_schema.settings) {
-                settings = plugin.settings_schema.settings.map((setting) => {
+                settings = plugin.settings_schema.settings.map((setting : any) => {
                     return {
                         ...setting,
                         key: 'PluginSettings.Plugins.' + escapedPluginId + '.' + setting.key.toLowerCase(),
@@ -61,7 +61,7 @@ function makeGetPluginSchema() {
 function makeMapStateToProps() {
     const getPluginSchema = makeGetPluginSchema();
 
-    return (state, ownProps) => {
+    return (state : any, ownProps : any) => {
         const pluginId = ownProps.match.params.plugin_id;
 
         return {
