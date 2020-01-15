@@ -1,6 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import React from 'react';
+import {RequestStatus} from 'mattermost-redux/constants';
 import {shallow} from 'enzyme';
 
 import EditChannelPurposeModal from 'components/edit_channel_purpose_modal/edit_channel_purpose_modal.jsx';
@@ -17,6 +18,7 @@ describe('comoponents/EditChannelPurposeModal', () => {
             <EditChannelPurposeModal
                 channel={channel}
                 ctrlSend={true}
+                requestStatus={RequestStatus.NOT_STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
                 actions={{patchChannel: jest.fn()}}
@@ -37,6 +39,7 @@ describe('comoponents/EditChannelPurposeModal', () => {
             <EditChannelPurposeModal
                 channel={channelWithDisplayName}
                 ctrlSend={true}
+                requestStatus={RequestStatus.NOT_STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
                 actions={{patchChannel: jest.fn()}}
@@ -57,6 +60,7 @@ describe('comoponents/EditChannelPurposeModal', () => {
             <EditChannelPurposeModal
                 channel={privateChannel}
                 ctrlSend={true}
+                requestStatus={RequestStatus.NOT_STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
                 actions={{patchChannel: jest.fn()}}
@@ -72,6 +76,7 @@ describe('comoponents/EditChannelPurposeModal', () => {
             <EditChannelPurposeModal
                 channel={channel}
                 ctrlSend={true}
+                requestStatus={RequestStatus.STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
                 actions={{patchChannel: jest.fn()}}
@@ -82,60 +87,45 @@ describe('comoponents/EditChannelPurposeModal', () => {
         expect(wrapper).toMatchSnapshot();
     });
 
-    it('match with modal error', async () => {
+    it('match with modal error', () => {
+        const wrapper = shallow(
+            <EditChannelPurposeModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.STARTED}
+                onHide={jest.fn()}
+                onModalDismissed={jest.fn()}
+                actions={{patchChannel: jest.fn()}}
+            />,
+            {disableLifecycleMethods: true}
+        );
+
         const serverError = {
             id: 'api.context.invalid_param.app_error',
             message: 'error',
         };
 
-        const wrapper = shallow(
-            <EditChannelPurposeModal
-                channel={channel}
-                ctrlSend={false}
-                onHide={jest.fn()}
-                onModalDismissed={jest.fn()}
-                actions={{patchChannel: jest.fn().mockResolvedValue({error: serverError})}}
-            />,
-            {disableLifecycleMethods: true}
-        );
-
-        const instance = wrapper.instance();
-        await instance.handleSave();
+        wrapper.setProps({
+            channel,
+            serverError,
+            ctrlSend: false,
+            requestStatus: RequestStatus.FAILURE,
+            onModalDismissed: jest.fn(),
+            actions: {patchChannel: jest.fn()},
+        });
 
         expect(wrapper).toMatchSnapshot();
     });
 
-    it('match with modal error with fake id', async () => {
-        const serverError = {
-            id: 'fake-error-id',
-            message: 'error',
-        };
-
+    it('match with modal error with fake id', () => {
         const wrapper = shallow(
             <EditChannelPurposeModal
                 channel={channel}
                 ctrlSend={false}
+                requestStatus={RequestStatus.STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
-                actions={{patchChannel: jest.fn().mockResolvedValue({error: serverError})}}
-            />,
-            {disableLifecycleMethods: true}
-        );
-
-        const instance = wrapper.instance();
-        await instance.handleSave();
-
-        expect(wrapper).toMatchSnapshot();
-    });
-
-    it('clear error on next', async () => {
-        const wrapper = shallow(
-            <EditChannelPurposeModal
-                channel={channel}
-                ctrlSend={false}
-                onHide={jest.fn()}
-                onModalDismissed={jest.fn()}
-                actions={{patchChannel: jest.fn().mockResolvedValue({data: true})}}
+                actions={{patchChannel: jest.fn()}}
             />,
             {disableLifecycleMethods: true}
         );
@@ -144,9 +134,57 @@ describe('comoponents/EditChannelPurposeModal', () => {
             id: 'fake-error-id',
             message: 'error',
         };
-        const instance = wrapper.instance();
-        instance.setError(serverError);
-        await instance.handleSave();
+
+        wrapper.setProps({
+            channel,
+            serverError,
+            ctrlSend: false,
+            requestStatus: RequestStatus.FAILURE,
+            onHide: jest.fn(),
+            onModalDismissed: jest.fn(),
+            actions: {patchChannel: jest.fn()},
+        });
+
+        expect(wrapper).toMatchSnapshot();
+    });
+
+    it('clear error on next', () => {
+        const wrapper = shallow(
+            <EditChannelPurposeModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.STARTED}
+                onHide={jest.fn()}
+                onModalDismissed={jest.fn()}
+                actions={{patchChannel: jest.fn()}}
+            />,
+            {disableLifecycleMethods: true}
+        );
+
+        const serverError = {
+            id: 'fake-error-id',
+            message: 'error',
+        };
+
+        wrapper.setProps({
+            channel,
+            serverError,
+            ctrlSend: false,
+            requestStatus: RequestStatus.FAILURE,
+            onHide: jest.fn(),
+            onModalDismissed: jest.fn(),
+            actions: {patchChannel: jest.fn()},
+        });
+
+        wrapper.setProps({
+            channel,
+            serverError,
+            ctrlSend: false,
+            requestStatus: RequestStatus.STARTED,
+            onHide: jest.fn(),
+            onModalDismissed: jest.fn(),
+            actions: {patchChannel: jest.fn()},
+        });
 
         expect(wrapper).toMatchSnapshot();
     });
@@ -156,6 +194,7 @@ describe('comoponents/EditChannelPurposeModal', () => {
             <EditChannelPurposeModal
                 channel={channel}
                 ctrlSend={true}
+                requestStatus={RequestStatus.STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
                 actions={{patchChannel: jest.fn()}}
@@ -174,30 +213,39 @@ describe('comoponents/EditChannelPurposeModal', () => {
         expect(wrapper.state('purpose')).toBe('new info');
     });
 
-    it('hide on success', async () => {
+    it('hide on success', () => {
         const wrapper = shallow(
             <EditChannelPurposeModal
                 channel={channel}
                 ctrlSend={true}
+                requestStatus={RequestStatus.STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
-                actions={{patchChannel: jest.fn().mockResolvedValue({data: true})}}
+                actions={{patchChannel: jest.fn()}}
             />,
             {disableLifecycleMethods: true}
         );
-        const instance = wrapper.instance();
-        await instance.handleSave();
+
+        wrapper.setProps({
+            channel,
+            ctrlSend: false,
+            requestStatus: RequestStatus.SUCCESS,
+            onHide: jest.fn(),
+            onModalDismissed: jest.fn(),
+            actions: {patchChannel: jest.fn()},
+        });
 
         expect(wrapper.state('show')).toBeFalsy();
     });
 
     it('submit on save button click', () => {
-        const patchChannel = jest.fn().mockResolvedValue({data: true});
+        const patchChannel = jest.fn();
 
         const wrapper = shallow(
             <EditChannelPurposeModal
                 channel={channel}
                 ctrlSend={true}
+                requestStatus={RequestStatus.NOT_STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
                 actions={{patchChannel}}
@@ -211,12 +259,13 @@ describe('comoponents/EditChannelPurposeModal', () => {
     });
 
     it('submit on ctrl + enter', () => {
-        const patchChannel = jest.fn().mockResolvedValue({data: true});
+        const patchChannel = jest.fn();
 
         const wrapper = shallow(
             <EditChannelPurposeModal
                 channel={channel}
                 ctrlSend={true}
+                requestStatus={RequestStatus.NOT_STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
                 actions={{patchChannel}}
@@ -235,12 +284,13 @@ describe('comoponents/EditChannelPurposeModal', () => {
     });
 
     it('submit on enter', () => {
-        const patchChannel = jest.fn().mockResolvedValue({data: true});
+        const patchChannel = jest.fn();
 
         const wrapper = shallow(
             <EditChannelPurposeModal
                 channel={channel}
                 ctrlSend={false}
+                requestStatus={RequestStatus.NOT_STARTED}
                 onHide={jest.fn()}
                 onModalDismissed={jest.fn()}
                 actions={{patchChannel}}

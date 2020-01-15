@@ -2,15 +2,13 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {intlShape} from 'react-intl';
 
 import LoadingWrapper from 'components/widgets/loading/loading_wrapper';
 
 type Props = {
     saving: boolean;
     disabled?: boolean;
-    id?: string;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     savingMessage?: React.ReactNode;
     defaultMessage?: React.ReactNode;
     btnClass?: string;
@@ -19,24 +17,17 @@ type Props = {
 
 export default class SaveButton extends React.PureComponent<Props> {
     public static defaultProps: Partial<Props> = {
-        btnClass: 'btn-primary',
-        defaultMessage: (
-            <FormattedMessage
-                id='save_button.save'
-                defaultMessage='Save'
-            />
-        ),
         disabled: false,
+        btnClass: 'btn-primary',
         extraClasses: '',
-        savingMessage: (
-            <FormattedMessage
-                id='save_button.saving'
-                defaultMessage='Saving'
-            />
-        ),
     }
 
+    public static contextTypes = {
+        intl: intlShape,
+    };
+
     public render() {
+        const {formatMessage} = this.context.intl;
         const {
             saving,
             disabled,
@@ -56,6 +47,9 @@ export default class SaveButton extends React.PureComponent<Props> {
             className += ' ' + extraClasses;
         }
 
+        const savingMessageComponent = savingMessage || formatMessage({id: 'save_button.saving', defaultMessage: 'Saving'});
+        const defaultMessageComponent = defaultMessage || formatMessage({id: 'save_button.save', defaultMessage: 'Save'});
+
         return (
             <button
                 type='submit'
@@ -66,9 +60,9 @@ export default class SaveButton extends React.PureComponent<Props> {
             >
                 <LoadingWrapper
                     loading={saving}
-                    text={savingMessage}
+                    text={savingMessageComponent}
                 >
-                    <span>{defaultMessage}</span>
+                    <span>{defaultMessageComponent}</span>
                 </LoadingWrapper>
             </button>
         );

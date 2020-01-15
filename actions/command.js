@@ -57,8 +57,7 @@ export function executeCommand(message, args) {
             if (channel.type === Constants.PRIVATE_CHANNEL) {
                 GlobalActions.showLeavePrivateChannelModal(channel);
                 return {data: true};
-            }
-            if (
+            } else if (
                 channel.type === Constants.DM_CHANNEL ||
                 channel.type === Constants.GM_CHANNEL
             ) {
@@ -87,7 +86,7 @@ export function executeCommand(message, args) {
             break;
         }
         case '/settings':
-            dispatch(openModal({modalId: ModalIdentifiers.USER_SETTINGS, dialogType: UserSettingsModal}));
+            dispatch(openModal({ModalId: ModalIdentifiers.USER_SETTINGS, dialogType: UserSettingsModal}));
             return {data: true};
         case '/collapse':
         case '/expand':

@@ -75,15 +75,6 @@ describe('components/error_page/ErrorMessage', () => {
         );
 
         expect(wrapper).toMatchSnapshot();
-
-        const wrapper2 = shallow(
-            <ErrorMessage
-                {...props}
-                isGuest={true}
-            />
-        );
-
-        expect(wrapper2).toMatchSnapshot();
     });
 
     test('should match snapshot, no type but with message', () => {

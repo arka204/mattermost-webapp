@@ -13,10 +13,10 @@ import Constants from 'utils/constants';
 import * as UserAgent from 'utils/user_agent';
 import * as Utils from 'utils/utils.jsx';
 import {makeAsyncComponent} from 'components/async_load';
-const LazyBackstageController = React.lazy(() => import('components/backstage'));
+import loadBackstageController from 'bundle-loader?lazy!components/backstage';
 import ChannelController from 'components/channel_layout/channel_controller';
 
-const BackstageController = makeAsyncComponent(LazyBackstageController);
+const BackstageController = makeAsyncComponent(loadBackstageController);
 
 let wakeUpInterval;
 let lastTime = Date.now();
@@ -34,7 +34,7 @@ export default class NeedsTeam extends React.Component {
             fetchMyChannelsAndMembers: PropTypes.func.isRequired,
             getMyTeamUnreads: PropTypes.func.isRequired,
             viewChannel: PropTypes.func.isRequired,
-            markChannelAsReadOnFocus: PropTypes.func.isRequired,
+            markChannelAsRead: PropTypes.func.isRequired,
             getTeamByName: PropTypes.func.isRequired,
             addUserToTeam: PropTypes.func.isRequired,
             selectTeam: PropTypes.func.isRequired,
@@ -54,7 +54,6 @@ export default class NeedsTeam extends React.Component {
             }).isRequired,
         }).isRequired,
         history: PropTypes.object.isRequired,
-        teamsList: PropTypes.arrayOf(PropTypes.object),
     };
 
     constructor(params) {
@@ -82,8 +81,6 @@ export default class NeedsTeam extends React.Component {
         this.state = {
             team,
             finishedFetchingChannels: false,
-            prevTeam: this.props.match.params.team,
-            teamsList: this.props.teamsList
         };
 
         if (!team) {
@@ -91,17 +88,16 @@ export default class NeedsTeam extends React.Component {
         }
     }
 
-    static getDerivedStateFromProps(nextProps, state) {
-        if (state.prevTeam !== nextProps.match.params.team) {
-            const team = state.teamsList ?
-                state.teamsList.find((teamObj) =>
-                    teamObj.name === nextProps.match.params.team) : null;
-            return {
-                prevTeam: nextProps.match.params.team,
-                team: (team || null)
-            };
+    UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
+        if (this.props.match.params.team !== nextProps.match.params.team) {
+            const team = this.updateCurrentTeam(nextProps);
+            this.setState({
+                team,
+            });
+            if (!team) {
+                this.joinTeam(nextProps);
+            }
         }
-        return {prevTeam: nextProps.match.params.team};
     }
 
     componentDidMount() {
@@ -126,14 +122,6 @@ export default class NeedsTeam extends React.Component {
         const {theme} = this.props;
         if (!Utils.areObjectsEqual(prevProps.theme, theme)) {
             Utils.applyTheme(theme);
-        }
-        if (this.props.match.params.team !== prevProps.match.params.team) {
-            if (this.state.team) {
-                this.initTeam(this.state.team);
-            }
-            if (!this.state.team) {
-                this.joinTeam(this.props);
-            }
         }
     }
 
@@ -160,7 +148,7 @@ export default class NeedsTeam extends React.Component {
     }
 
     handleFocus = () => {
-        this.props.actions.markChannelAsReadOnFocus(this.props.currentChannelId);
+        this.props.actions.markChannelAsRead(this.props.currentChannelId);
         window.isActive = true;
 
         if (Date.now() - this.blurTime > UNREAD_CHECK_TIME_MILLISECONDS) {

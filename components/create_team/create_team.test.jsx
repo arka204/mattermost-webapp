@@ -1,13 +1,14 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {shallow} from 'enzyme';
 import React from 'react';
+
+import {shallowWithIntl} from 'tests/helpers/intl-test-helper';
 
 import CreateTeam from 'components/create_team/create_team.jsx';
 
 jest.mock('components/announcement_bar');
-jest.mock('components/common/back_button');
+jest.mock('components/common/back_button.jsx');
 jest.mock('react-router-dom');
 
 describe('/components/create_team', () => {
@@ -27,13 +28,13 @@ describe('/components/create_team', () => {
     };
 
     test('should match snapshot', () => {
-        const wrapper = shallow(<CreateTeam {...defaultProps}/>);
+        const wrapper = shallowWithIntl(<CreateTeam {...defaultProps}/>);
 
         expect(wrapper).toMatchSnapshot();
     });
 
     test('should run props.history.push with new state', () => {
-        const wrapper = shallow(<CreateTeam {...defaultProps}/>);
+        const wrapper = shallowWithIntl(<CreateTeam {...defaultProps}/>);
 
         const history = wrapper.instance().props.history;
         const state = {team: {name: 'team_name'}, wizard: ''};

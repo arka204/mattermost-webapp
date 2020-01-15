@@ -29,7 +29,7 @@ const optionsLength = {
     someradiooptions: 2, // number of defined basic options
 };
 
-describe('Interactive Dialog', () => {
+describe('ID15888 Interactive Dialog', () => {
     before(() => {
         // Set required ServiceSettings
         const newSettings = {
@@ -71,12 +71,7 @@ describe('Interactive Dialog', () => {
         });
     });
 
-    afterEach(() => {
-        // # Reload current page after each test to close any dialogs left open
-        cy.reload();
-    });
-
-    it('ID15888 - UI check', () => {
+    it('UI check', () => {
         // # Post a slash command
         cy.get('#postListContent').should('be.visible');
         cy.postMessage(`/${createdCommand.trigger}`);
@@ -108,10 +103,8 @@ describe('Interactive Dialog', () => {
                 } else if (element.name === 'someradiooptions') {
                     cy.wrap($elForm).find('input').should('be.visible').and('have.length', optionsLength[element.name]);
 
-                    // * Verify that no option is selected by default
-                    cy.wrap($elForm).find('input').each(($elInput) => {
-                        cy.wrap($elInput).should('not.be.checked');
-                    });
+                    // * Verify that the default value is the first element of the list
+                    cy.wrap($elForm).find('input').first().should('have.value', 'engineering').and('have.attr', 'checked');
                 } else if (element.name === 'boolean_input') {
                     cy.wrap($elForm).find('.checkbox').should('be.visible').within(() => {
                         cy.get('#boolean_input').
@@ -145,7 +138,7 @@ describe('Interactive Dialog', () => {
         });
     });
 
-    it('ID15888 - Cancel button works', () => {
+    it('Cancel button works', () => {
         // # Post a slash command
         cy.postMessage(`/${createdCommand.trigger}`);
 
@@ -159,7 +152,7 @@ describe('Interactive Dialog', () => {
         cy.get('#interactiveDialogModal').should('not.be.visible');
     });
 
-    it('ID15888 - "X" closes the dialog', () => {
+    it('"X" closes the dialog', () => {
         // # Post a slash command
         cy.postMessage(`/${createdCommand.trigger}`);
 
@@ -175,7 +168,7 @@ describe('Interactive Dialog', () => {
         cy.get('#interactiveDialogModal').should('not.be.visible');
     });
 
-    it('ID15888 - Correct error messages displayed if empty form is submitted', () => {
+    it('Correct error messages displayed if empty form is submitted', () => {
         // # Post a slash command
         cy.postMessage(`/${createdCommand.trigger}`);
 
@@ -202,7 +195,7 @@ describe('Interactive Dialog', () => {
         closeInteractiveDialog();
     });
 
-    it('ID15888 - Email validation', () => {
+    it('Email validation', () => {
         // # Post a slash command
         cy.postMessage(`/${createdCommand.trigger}`);
 
@@ -231,7 +224,7 @@ describe('Interactive Dialog', () => {
         closeInteractiveDialog();
     });
 
-    it('ID15888 - Number validation', () => {
+    it('Number validation', () => {
         cy.postMessage(`/${createdCommand.trigger}`);
 
         cy.get('#interactiveDialogModal').should('be.visible');
@@ -242,7 +235,7 @@ describe('Interactive Dialog', () => {
             {valid: false, value: 'invalid-number'},
             {valid: true, value: 12},
         ].forEach((testCase) => {
-            cy.get('#somenumber').scrollIntoView().clear().type(testCase.value);
+            cy.get('#somenumber').scrollIntoView().type(testCase.value);
 
             cy.get('#interactiveDialogSubmit').click();
 

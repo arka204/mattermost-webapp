@@ -23,7 +23,6 @@ export default class AdminConsole extends React.Component {
         adminDefinition: PropTypes.object.isRequired,
         environmentConfig: PropTypes.object,
         license: PropTypes.object.isRequired,
-        unauthorizedRoute: PropTypes.string.isRequired,
         buildEnterpriseReady: PropTypes.bool,
         roles: PropTypes.object.isRequired,
         match: PropTypes.shape({
@@ -123,7 +122,7 @@ export default class AdminConsole extends React.Component {
 
         if (!this.props.isCurrentUserSystemAdmin) {
             return (
-                <Redirect to={this.props.unauthorizedRoute}/>
+                <Redirect to='/'/>
             );
         }
 

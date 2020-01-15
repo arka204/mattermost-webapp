@@ -40,6 +40,11 @@ export default class InstalledOAuthApp extends React.PureComponent {
         creatorName: PropTypes.string.isRequired,
 
         /**
+        * The request state for regenOAuthAppSecret action. Contains status and error
+        */
+        regenOAuthAppSecretRequest: PropTypes.object.isRequired,
+
+        /**
         * The function to call when Regenerate Secret link is clicked
         */
         onRegenerateSecret: PropTypes.func.isRequired,
@@ -78,7 +83,8 @@ export default class InstalledOAuthApp extends React.PureComponent {
     handleRegenerate = (e) => {
         e.preventDefault();
         this.props.onRegenerateSecret(this.props.oauthApp.id).then(
-            ({error}) => {
+            () => {
+                const {error} = this.props.regenOAuthAppSecretRequest;
                 if (error) {
                     this.setState({error: error.message});
                 } else {
@@ -134,7 +140,7 @@ export default class InstalledOAuthApp extends React.PureComponent {
 
         const urls = (
             <div className='item-details__row'>
-                <span className='item-details__url word-break--all'>
+                <span className='item-details__url'>
                     <FormattedMessage
                         id='installed_integrations.callback_urls'
                         defaultMessage='Callback URLs: {urls}'
@@ -264,7 +270,7 @@ export default class InstalledOAuthApp extends React.PureComponent {
                     {error}
                     {description}
                     <div className='item-details__row'>
-                        <span className='item-details__url word-break--all'>
+                        <span className='item-details__url'>
                             <FormattedMarkdownMessage
                                 id='installed_oauth_apps.is_trusted'
                                 defaultMessage='Is Trusted: **{isTrusted}**'

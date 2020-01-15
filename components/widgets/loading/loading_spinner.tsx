@@ -2,10 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-
-import LocalizedIcon from 'components/localized_icon';
-
-import {t} from 'utils/i18n';
+import {intlShape} from 'react-intl';
 
 type Props = {
     text: React.ReactNode;
@@ -16,16 +13,20 @@ export default class LoadingSpinner extends React.PureComponent<Props> {
         text: null,
     }
 
+    public static contextTypes = {
+        intl: intlShape.isRequired,
+    };
+
     public render() {
+        const {formatMessage} = this.context.intl;
         return (
             <span
                 id='loadingSpinner'
                 className={'LoadingSpinner' + (this.props.text ? ' with-text' : '')}
             >
-                <LocalizedIcon
+                <span
                     className='fa fa-spinner fa-fw fa-pulse spinner'
-                    component='span'
-                    title={{id: t('generic_icons.loading'), defaultMessage: 'Loading Icon'}}
+                    title={formatMessage({id: 'generic_icons.loading', defaultMessage: 'Loading Icon'})}
                 />
                 {this.props.text}
             </span>

@@ -57,17 +57,6 @@
                 }
             }
 
-            .TeamIcon__content {
-                @include opacity(.5);
-                &:hover {
-                    @include opacity(.8);
-
-                    &.no-hover {
-                        @include opacity(.5);
-                    }
-                }
-            }
-
             button {
                 border: none;
                 padding: 0;
@@ -100,10 +89,6 @@
                 @include opacity(.5);
                 cursor: not-allowed;
             }
-
-            .team-btn {
-                color: var(--sidebar-header-text-color);
-            }
         }
 
         .scrollbar--view {
@@ -123,11 +108,5 @@
 
     .app__content {
         margin-left: 285px;
-    }
-    .team-sidebar {
-        .team-wrapper {
-            .team-container {
-            }
-        }
     }
 }

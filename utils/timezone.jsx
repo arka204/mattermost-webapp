@@ -21,8 +21,3 @@ export function getBrowserUtcOffset() {
 export function getUtcOffsetForTimeZone(timezone) {
     return moment.tz(timezone).utcOffset();
 }
-
-export function getCurrentDateForTimezone(timezone) {
-    const tztime = moment().tz(timezone);
-    return new Date(tztime.year(), tztime.month(), tztime.date());
-}

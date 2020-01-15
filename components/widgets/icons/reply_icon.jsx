@@ -14,6 +14,7 @@ export default class ReplyIcon extends React.PureComponent {
                 >
                     {(ariaLabel) => (
                         <svg
+                            id='Layer_1'
                             x='0px'
                             y='0px'
                             width='17px'

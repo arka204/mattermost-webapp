@@ -19,7 +19,6 @@ class MenuActionSuggestion extends Suggestion {
             <div
                 className={className}
                 onClick={this.handleClick}
-                onMouseMove={this.handleMouseMove}
                 {...Suggestion.baseProps}
             >
                 {item.text}

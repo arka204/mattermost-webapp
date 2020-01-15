@@ -3,36 +3,17 @@
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
 
-import {installPlugin} from 'actions/marketplace';
-import {closeModal} from 'actions/views/modals';
-import {ModalIdentifiers} from 'utils/constants';
-import {getInstalling, getError} from 'selectors/views/marketplace';
-import {trackEvent} from 'actions/diagnostics_actions.jsx';
+import {installPluginFromUrl} from 'mattermost-redux/actions/admin';
 
-import MarketplaceItem from './marketplace_item';
-
-function mapStateToProps(state, props) {
-    const installing = getInstalling(state, props.id);
-    const error = getError(state, props.id);
-    const isDefaultMarketplace = getConfig(state).IsDefaultMarketplace === 'true';
-
-    return {
-        installing,
-        error,
-        isDefaultMarketplace,
-        trackEvent,
-    };
-}
+import MarketplaceItem from './marketplace_item.jsx';
 
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators({
-            installPlugin,
-            closeMarketplaceModal: () => closeModal(ModalIdentifiers.PLUGIN_MARKETPLACE),
+            installPluginFromUrl,
         }, dispatch),
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MarketplaceItem);
+export default connect(null, mapDispatchToProps)(MarketplaceItem);

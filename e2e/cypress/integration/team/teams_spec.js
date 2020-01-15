@@ -81,15 +81,12 @@ describe('Teams Suite', () => {
 
         // # Click hamburger menu > Invite People
         cy.get('#sidebarHeaderDropdownButton').should('be.visible').click();
-        cy.get('#invitePeople').should('be.visible').and('contain', 'Invite People').
-            find('.extra-text').should('have.text', 'Add or invite people to the team');
-
-        cy.get('#invitePeople').click();
+        cy.get('#invitePeople').should('be.visible').and('have.text', 'Invite People').click();
 
         // * Check that the Invitation Modal opened up
-        cy.findByTestId('invitationModal', {timeout: TIMEOUTS.TINY}).should('be.visible');
+        cy.getByTestId('invitationModal', {timeout: TIMEOUTS.TINY}).should('be.visible');
 
-        cy.findByTestId('inputPlaceholder').should('be.visible').within(($el) => {
+        cy.getByTestId('inputPlaceholder').should('be.visible').within(($el) => {
             // # Type the first letters of a user
             cy.wrap($el).get('input').type(nameStartsWith, {force: true});
 
@@ -101,8 +98,8 @@ describe('Teams Suite', () => {
         });
 
         // # Click "Invite Members" button, then "Done" button
-        cy.findByText(/Invite Members/).should('be.visible').click();
-        cy.findByText(/Done/).should('be.visible').click();
+        cy.getByText(/Invite Members/).should('be.visible').click();
+        cy.getByText(/Done/).should('be.visible').click();
 
         // * As sysadmin, verify system message posts in Town Square and Off-Topic
         cy.getLastPost().wait(TIMEOUTS.TINY).then(($el) => {

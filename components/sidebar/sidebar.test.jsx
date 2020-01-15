@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import {shallowWithIntl} from 'tests/helpers/intl-test-helper';
+import {shallowWithIntl} from 'tests/helpers/intl-test-helper.jsx';
 
 import {Constants} from 'utils/constants';
-import Sidebar from 'components/sidebar/sidebar';
+import Sidebar from 'components/sidebar/sidebar.jsx';
 
 jest.mock('utils/utils', () => {
     const original = require.requireActual('utils/utils');

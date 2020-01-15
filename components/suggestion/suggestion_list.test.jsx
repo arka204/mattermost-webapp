@@ -17,7 +17,6 @@ describe('components/SuggestionList', () => {
         terms: [],
         selection: '',
         components: [],
-        onItemHover: jest.fn(),
     };
 
     test('should not throw error when currentLabel is null and label is generated', () => {

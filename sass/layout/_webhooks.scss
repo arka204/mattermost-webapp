@@ -337,10 +337,6 @@
                 font-size: 13px;
                 font-weight: 700;
                 padding: 6px 12px;
-                &[disabled] {
-                    opacity: 0.5;
-                    cursor: auto;
-                }
             }
 
             .alert {

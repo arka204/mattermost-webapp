@@ -162,8 +162,6 @@ export default class PostMessageView extends React.PureComponent {
             message = message.concat(visibleMessage);
         }
 
-        const id = isRHS ? `rhsPostMessageText_${post.id}` : `postMessageText_${post.id}`;
-
         return (
             <ShowMore
                 checkOverflow={this.state.checkOverflow}
@@ -172,7 +170,7 @@ export default class PostMessageView extends React.PureComponent {
                 <div
                     aria-readonly='true'
                     tabIndex='0'
-                    id={id}
+                    id={`postMessageText_${post.id}`}
                     className='post-message__text'
                     onClick={Utils.handleFormattedTextClick}
                 >

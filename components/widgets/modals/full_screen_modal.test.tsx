@@ -2,18 +2,18 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
+import {shallow} from 'enzyme';
 
-import {shallowWithIntl} from 'tests/helpers/intl-test-helper';
+import CloseIcon from 'components/widgets/icons/close_icon';
 
 import FullScreenModal from './full_screen_modal';
 
 describe('components/widgets/modals/FullScreenModal', () => {
     test('showing content', () => {
-        const wrapper = shallowWithIntl(
+        const wrapper = shallow(
             <FullScreenModal
                 show={true}
                 onClose={jest.fn()}
-                ariaLabel='test'
             >
                 {'test'}
             </FullScreenModal>
@@ -28,40 +28,23 @@ describe('components/widgets/modals/FullScreenModal', () => {
   unmountOnExit={true}
 >
   <div
-    aria-label="test"
-    aria-modal={true}
     className="FullScreenModal"
-    role="dialog"
-    tabIndex={-1}
   >
-    <button
-      aria-label="Close"
+    <CloseIcon
       className="close-x"
+      id="closeIcon"
       onClick={[Function]}
-    >
-      <CloseIcon
-        id="closeIcon"
-      />
-    </button>
+    />
     test
   </div>
-  <div
-    style={
-      Object {
-        "display": "none",
-      }
-    }
-    tabIndex={0}
-  />
 </CSSTransition>
 `);
     });
     test('not showing content', () => {
-        const wrapper = shallowWithIntl(
+        const wrapper = shallow(
             <FullScreenModal
                 show={false}
                 onClose={jest.fn()}
-                ariaLabel='test'
             >
                 {'test'}
             </FullScreenModal>
@@ -76,133 +59,39 @@ describe('components/widgets/modals/FullScreenModal', () => {
   unmountOnExit={true}
 >
   <div
-    aria-label="test"
-    aria-modal={true}
     className="FullScreenModal"
-    role="dialog"
-    tabIndex={-1}
   >
-    <button
-      aria-label="Close"
+    <CloseIcon
       className="close-x"
+      id="closeIcon"
       onClick={[Function]}
-    >
-      <CloseIcon
-        id="closeIcon"
-      />
-    </button>
+    />
     test
   </div>
-  <div
-    style={
-      Object {
-        "display": "none",
-      }
-    }
-    tabIndex={0}
-  />
 </CSSTransition>
 `);
     });
-    test('with back icon', () => {
-        const wrapper = shallowWithIntl(
-            <FullScreenModal
-                show={true}
-                onClose={jest.fn()}
-                onGoBack={jest.fn()}
-                ariaLabel='test'
-            >
-                {'test'}
-            </FullScreenModal>
-        );
-        expect(wrapper).toMatchInlineSnapshot(`
-<CSSTransition
-  appear={true}
-  classNames="FullScreenModal"
-  in={true}
-  mountOnEnter={true}
-  timeout={100}
-  unmountOnExit={true}
->
-  <div
-    aria-label="test"
-    aria-modal={true}
-    className="FullScreenModal"
-    role="dialog"
-    tabIndex={-1}
-  >
-    <button
-      aria-label="Back"
-      className="back"
-      onClick={[MockFunction]}
-    >
-      <BackIcon
-        id="backIcon"
-      />
-    </button>
-    <button
-      aria-label="Close"
-      className="close-x"
-      onClick={[Function]}
-    >
-      <CloseIcon
-        id="closeIcon"
-      />
-    </button>
-    test
-  </div>
-  <div
-    style={
-      Object {
-        "display": "none",
-      }
-    }
-    tabIndex={0}
-  />
-</CSSTransition>
-`);
-    });
-
     test('close on close icon click', () => {
         const close = jest.fn();
-        const wrapper = shallowWithIntl(
+        const wrapper = shallow(
             <FullScreenModal
                 show={true}
                 onClose={close}
-                ariaLabel='test'
             >
                 {'test'}
             </FullScreenModal>
         );
         expect(close).not.toBeCalled();
-        wrapper.find('button.close-x').simulate('click');
+        wrapper.find(CloseIcon).simulate('click');
         expect(close).toBeCalled();
-    });
-
-    test('go back on back icon click', () => {
-        const back = jest.fn();
-        const wrapper = shallowWithIntl(
-            <FullScreenModal
-                show={true}
-                onClose={jest.fn()}
-                onGoBack={back}
-                ariaLabel='test'
-            >
-                {'test'}
-            </FullScreenModal>
-        );
-        expect(back).not.toBeCalled();
-        wrapper.find('button.back').simulate('click');
-        expect(back).toBeCalled();
     });
 
     test('close on esc keypress', () => {
         const close = jest.fn();
-        shallowWithIntl(
+        shallow(
             <FullScreenModal
                 show={true}
                 onClose={close}
-                ariaLabel='test'
             >
                 {'test'}
             </FullScreenModal>

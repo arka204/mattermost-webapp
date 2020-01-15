@@ -13,6 +13,10 @@ describe('components/integrations/AddIncomingWebhook', () => {
             id: 'testteamid',
             name: 'test',
         },
+        createIncomingHookRequest: {
+            status: 'not_started',
+            error: null,
+        },
         enablePostUsernameOverride: true,
         enablePostIconOverride: true,
         actions: {createIncomingHook},

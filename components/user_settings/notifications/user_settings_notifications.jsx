@@ -107,13 +107,14 @@ function getNotificationsStateFromProps(props) {
     };
 }
 
-export default class NotificationsTab extends React.PureComponent {
+export default class NotificationsTab extends React.Component {
     static propTypes = {
         user: PropTypes.object,
         updateSection: PropTypes.func,
         activeSection: PropTypes.string,
         closeModal: PropTypes.func.isRequired,
         collapseModal: PropTypes.func.isRequired,
+        siteName: PropTypes.string,
         sendPushNotifications: PropTypes.bool,
         enableAutoResponder: PropTypes.bool,
         actions: PropTypes.shape({
@@ -931,6 +932,7 @@ export default class NotificationsTab extends React.PureComponent {
                         onChange={this.handleEmailRadio}
                         saving={this.state.isSaving}
                         serverError={this.state.serverError}
+                        siteName={this.props.siteName}
                     />
                     <div className='divider-light'/>
                     {pushNotificationSection}

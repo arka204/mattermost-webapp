@@ -17,7 +17,6 @@ import notice from './notice';
 import system from './system';
 import channelSelectorModal from './channel_selector_modal';
 import settings from './settings';
-import marketplace from './marketplace';
 
 export default combineReducers({
     admin,
@@ -34,5 +33,4 @@ export default combineReducers({
     system,
     channelSelectorModal,
     settings,
-    marketplace,
 });

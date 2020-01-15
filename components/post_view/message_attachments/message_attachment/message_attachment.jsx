@@ -115,7 +115,6 @@ export default class MessageAttachment extends React.PureComponent {
                         key={action.id}
                         postId={this.props.postId}
                         action={action}
-                        disabled={action.disabled}
                     />
                 );
                 break;
@@ -125,7 +124,6 @@ export default class MessageAttachment extends React.PureComponent {
                     <ActionButton
                         key={action.id}
                         action={action}
-                        disabled={action.disabled}
                         handleAction={this.handleAction}
                     />
                 );

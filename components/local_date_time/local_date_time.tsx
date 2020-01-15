@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {injectIntl} from 'react-intl';
+import {FormattedTime} from 'react-intl';
 import moment from 'moment-timezone';
 
 type Props = {
@@ -20,17 +20,15 @@ type Props = {
     /*
      * Current timezone of the user
      */
-    timeZone?: string | null | undefined;
+    timeZone?: string;
 
     /*
      * Enable timezone feature
      */
     enableTimezone?: boolean;
-
-    intl: any; // TODO This needs to be replaced with IntlShape once react-intl is upgraded
 }
 
-class LocalDateTime extends React.PureComponent<Props> {
+export default class LocalDateTime extends React.PureComponent<Props> {
     public render() {
         const {
             enableTimezone,
@@ -41,24 +39,14 @@ class LocalDateTime extends React.PureComponent<Props> {
 
         const date = eventTime ? new Date(eventTime) : new Date();
 
-        const momentDate = moment(date);
-        let titleString = momentDate.toString();
+        const titleMoment = moment(date);
+        let titleString = titleMoment.toString();
         if (enableTimezone && timeZone) {
-            momentDate.tz(timeZone);
-            titleString = momentDate.toString() + ' (' + momentDate.tz() + ')';
+            titleMoment.tz(timeZone);
+            titleString = titleMoment.toString() + ' (' + titleMoment.tz() + ')';
         }
 
         const timezoneProps = enableTimezone && timeZone ? {timeZone} : {};
-        const options = {
-            ...timezoneProps,
-            hour12: !useMilitaryTime,
-        };
-        let formattedTime = this.props.intl.formatTime(date, options);
-
-        if (formattedTime === String(date)) {
-            const format = useMilitaryTime ? 'HH:mm' : 'hh:mm A';
-            formattedTime = momentDate.format(format);
-        }
 
         return (
             <time
@@ -66,11 +54,14 @@ class LocalDateTime extends React.PureComponent<Props> {
                 className='post__time'
                 dateTime={date.toISOString()}
                 title={titleString}
+                id='localDateTime'
             >
-                <span>{formattedTime}</span>
+                <FormattedTime
+                    {...timezoneProps}
+                    hour12={!useMilitaryTime}
+                    value={date}
+                />
             </time>
         );
     }
 }
-
-export default injectIntl(LocalDateTime);

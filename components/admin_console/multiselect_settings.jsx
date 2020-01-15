@@ -7,7 +7,7 @@ import ReactSelect from 'react-select';
 
 import FormError from 'components/form_error';
 
-import Setting from './setting';
+import Setting from './setting.jsx';
 
 export default class MultiSelectSetting extends React.Component {
     static propTypes = {

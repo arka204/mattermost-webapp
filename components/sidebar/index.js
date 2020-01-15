@@ -32,13 +32,8 @@ function mapStateToProps(state) {
     const currentTeammate = currentChannel && currentChannel.teammate_id && getCurrentChannel(state, currentChannel.teammate_id);
     const currentTeam = getCurrentTeam(state);
 
-    let canCreatePublicChannel = false;
-    let canCreatePrivateChannel = false;
-
-    if (currentTeam) {
-        canCreatePublicChannel = haveITeamPermission(state, {team: currentTeam.id, permission: Permissions.CREATE_PUBLIC_CHANNEL});
-        canCreatePrivateChannel = haveITeamPermission(state, {team: currentTeam.id, permission: Permissions.CREATE_PRIVATE_CHANNEL});
-    }
+    const canCreatePublicChannel = haveITeamPermission(state, {team: currentTeam.id, permission: Permissions.CREATE_PUBLIC_CHANNEL});
+    const canCreatePrivateChannel = haveITeamPermission(state, {team: currentTeam.id, permission: Permissions.CREATE_PRIVATE_CHANNEL});
 
     const sidebarPrefs = getSidebarPreferences(state);
     const lastUnreadChannel = state.views.channel.keepChannelIdAsUnread;
@@ -72,7 +67,6 @@ function mapStateToProps(state) {
         canCreatePrivateChannel,
         isOpen: getIsLhsOpen(state),
         unreads: getUnreads(state),
-        viewArchivedChannels: (getConfig(state).ExperimentalViewArchivedChannels === 'true')
     };
 }
 

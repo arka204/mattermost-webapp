@@ -20,6 +20,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -60,25 +61,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <div
       className="groups-list-loading"
@@ -111,6 +107,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -231,25 +228,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <div
       className="groups-list-loading"
@@ -282,6 +274,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -323,25 +316,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <div
       className="groups-list-loading"
@@ -411,6 +399,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -452,25 +441,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <div
       className="groups-list-loading"
@@ -540,6 +524,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -581,25 +566,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <div
       className="groups-list-loading"
@@ -669,6 +649,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -709,25 +690,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <GroupRow
       actions={
@@ -835,6 +811,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -875,25 +852,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <GroupRow
       actions={
@@ -1106,6 +1078,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -1146,25 +1119,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <GroupRow
       actions={
@@ -1377,6 +1345,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -1417,25 +1386,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <GroupRow
       actions={
@@ -1543,6 +1507,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -1583,25 +1548,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <div
       className="groups-list-empty"
@@ -1636,6 +1596,7 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       <SearchIcon
         aria-hidden="true"
         className="search__icon"
+        id="searchIcon"
       />
       <i
         className="fa fa-times-circle group-filter-action hidden"
@@ -1676,25 +1637,20 @@ exports[`components/admin_console/group_settings/GroupsList should match snapsho
       />
     </div>
     <div
-      className="group-content"
+      className="group-description"
     >
-      <div
-        className="group-description"
-      >
-        <FormattedMessage
-          defaultMessage="Mattermost Linking"
-          id="admin.group_settings.groups_list.mappingHeader"
-          values={Object {}}
-        />
-      </div>
-      <div
-        className="group-actions"
+      <FormattedMessage
+        defaultMessage="Mattermost Linking"
+        id="admin.group_settings.groups_list.mappingHeader"
+        values={Object {}}
       />
     </div>
+    <div
+      className="group-actions"
+    />
   </div>
   <div
     className="groups-list--body"
-    id="groups-list--body"
   >
     <div
       className="groups-list-loading"

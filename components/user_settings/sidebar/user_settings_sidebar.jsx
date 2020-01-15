@@ -3,11 +3,9 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, intlShape} from 'react-intl';
 
 import {trackEvent} from 'actions/diagnostics_actions.jsx';
-
-import LocalizedIcon from 'components/localized_icon';
 
 import Constants from 'utils/constants';
 import {isMac} from 'utils/utils.jsx';
@@ -82,6 +80,10 @@ export default class UserSettingsSidebar extends React.Component {
         activeSection: PropTypes.string,
         closeModal: PropTypes.func.isRequired,
         collapseModal: PropTypes.func.isRequired,
+    };
+
+    static contextTypes = {
+        intl: intlShape.isRequired,
     };
 
     constructor(props) {
@@ -617,13 +619,7 @@ export default class UserSettingsSidebar extends React.Component {
                         />
                     }
                     inputs={[
-                        <fieldset key='channelSwitcherSectionSetting'>
-                            <legend className='form-legend hidden-label'>
-                                <FormattedMessage
-                                    id='user.settings.sidebar.channelSwitcherSectionTitle'
-                                    defaultMessage='Channel Switcher'
-                                />
-                            </legend>
+                        <div key='channelSwitcherSectionSetting'>
                             <div
                                 id='channelSwitcherRadioOn'
                                 className='radio'
@@ -666,7 +662,7 @@ export default class UserSettingsSidebar extends React.Component {
                                 <br/>
                                 {helpChannelSwitcherText}
                             </div>
-                        </fieldset>,
+                        </div>,
                     ]}
                     setting={'channel_switcher_section'}
                     submit={this.handleSubmit}
@@ -694,6 +690,7 @@ export default class UserSettingsSidebar extends React.Component {
 
     render() {
         const {showUnusedOption, showChannelOrganization} = this.props;
+        const {formatMessage} = this.context.intl;
 
         const channelOrganizationSection = showChannelOrganization ? this.renderChannelOrganizationSection() : null;
         const autoCloseDMSection = showUnusedOption ? this.renderAutoCloseDMSection() : null;
@@ -717,9 +714,10 @@ export default class UserSettingsSidebar extends React.Component {
                         ref='title'
                     >
                         <div className='modal-back'>
-                            <LocalizedIcon
+                            <i
                                 className='fa fa-angle-left'
-                                title={{id: t('generic_icons.collapse'), defaultMessage: 'Collapse Icon'}}
+                                title={formatMessage({id: 'generic_icons.collapse', defaultMessage: 'Collapse Icon'})}
+                                onClick={this.props.collapseModal}
                             />
                         </div>
                         <FormattedMessage

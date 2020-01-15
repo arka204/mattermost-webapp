@@ -18,7 +18,7 @@ export default class PluginChannelHeaderIcon extends React.PureComponent {
                             height='14px'
                             viewBox='0 0 16 16'
                             version='1.1'
-                            role='img'
+                            role='icon'
                             aria-label={ariaLabel}
                         >
                             <path

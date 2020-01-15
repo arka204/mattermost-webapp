@@ -22,7 +22,6 @@ export default function ImagePreview({fileInfo, canDownloadFiles}) {
             download={true}
         >
             <img
-                data-testid='imagePreview'
                 alt={'preview url image'}
                 src={previewUrl}
             />

@@ -51,7 +51,6 @@ exports[`components/SingleImageView should match snapshot 1`] = `
               "width": 350,
             }
           }
-          handleSmallImageContainer={true}
           onClick={[Function]}
           onImageLoaded={[Function]}
           showLoader={true}
@@ -114,7 +113,6 @@ exports[`components/SingleImageView should match snapshot 2`] = `
               "width": 350,
             }
           }
-          handleSmallImageContainer={true}
           onClick={[Function]}
           onImageLoaded={[Function]}
           showLoader={true}
@@ -197,7 +195,6 @@ exports[`components/SingleImageView should match snapshot, SVG image 1`] = `
               "post_id": "post_id",
             }
           }
-          handleSmallImageContainer={true}
           onClick={[Function]}
           onImageLoaded={[Function]}
           showLoader={true}
@@ -262,7 +259,6 @@ exports[`components/SingleImageView should match snapshot, SVG image 2`] = `
               "post_id": "post_id",
             }
           }
-          handleSmallImageContainer={true}
           onClick={[Function]}
           onImageLoaded={[Function]}
           showLoader={true}
@@ -340,7 +336,6 @@ exports[`components/SingleImageView should set loaded state on callback of onIma
               "width": 350,
             }
           }
-          handleSmallImageContainer={true}
           onClick={[Function]}
           onImageLoaded={[Function]}
           showLoader={true}

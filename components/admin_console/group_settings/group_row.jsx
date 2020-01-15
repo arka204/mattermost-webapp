@@ -60,10 +60,7 @@ export default class GroupRow extends React.Component {
         }
         if (this.props.has_syncables) {
             return (
-                <Link
-                    to={'/admin_console/user_management/groups/' + this.props.mattermost_group_id}
-                    id={`${this.props.name}_edit`}
-                >
+                <Link to={'/admin_console/user_management/groups/' + this.props.mattermost_group_id}>
                     <FormattedMessage
                         id='admin.group_settings.group_row.edit'
                         defaultMessage='Edit'
@@ -72,10 +69,7 @@ export default class GroupRow extends React.Component {
             );
         }
         return (
-            <Link
-                to={'/admin_console/user_management/groups/' + this.props.mattermost_group_id}
-                id={`${this.props.name}_configure`}
-            >
+            <Link to={'/admin_console/user_management/groups/' + this.props.mattermost_group_id}>
                 <FormattedMessage
                     id='admin.group_settings.group_row.configure'
                     defaultMessage='Configure'
@@ -158,29 +152,24 @@ export default class GroupRow extends React.Component {
     render = () => {
         return (
             <div
-                id={`${this.props.name}_group`}
                 className={'group ' + (this.props.checked ? 'checked' : '')}
                 onClick={this.onRowClick}
             >
                 <div className='group-row'>
-                    <div className='group-name'>
-                        <div
-                            className={'group-check ' + (this.props.checked ? 'checked' : '')}
-                        >
-                            {this.props.checked && <CheckboxCheckedIcon/>}
-                        </div>
-                        <span>
-                            {this.props.name}
-                        </span>
+                    <div
+                        className={'group-check ' + (this.props.checked ? 'checked' : '')}
+                    >
+                        {this.props.checked && <CheckboxCheckedIcon/>}
                     </div>
-                    <div className='group-content'>
-                        <span className='group-description'>
-                            {this.renderLinked()}
-                        </span>
-                        <span className='group-actions'>
-                            {this.renderActions()}
-                        </span>
-                    </div>
+                    <span className='group-name'>
+                        {this.props.name}
+                    </span>
+                    <span className='group-description'>
+                        {this.renderLinked()}
+                    </span>
+                    <span className='group-actions'>
+                        {this.renderActions()}
+                    </span>
                 </div>
             </div>
         );

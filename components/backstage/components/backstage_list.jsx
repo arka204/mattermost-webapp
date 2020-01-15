@@ -60,19 +60,19 @@ export default class BackstageList extends React.Component {
                 if (!filter) {
                     if (this.props.emptyText) {
                         children = (
-                            <div className='backstage-list__item backstage-list__empty'>
+                            <span className='backstage-list__item backstage-list__empty'>
                                 {this.props.emptyText}
-                            </div>
+                            </span>
                         );
                     }
                 } else if (this.props.emptyTextSearch) {
                     children = (
-                        <div
+                        <span
                             className='backstage-list__item backstage-list__empty'
                             id='emptySearchResultsMessage'
                         >
                             {React.cloneElement(this.props.emptyTextSearch, {values: {searchTerm: filter}})}
-                        </div>
+                        </span>
                     );
                 }
             }

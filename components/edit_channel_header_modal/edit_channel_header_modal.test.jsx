@@ -2,9 +2,9 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
+import {RequestStatus} from 'mattermost-redux/constants';
 
 import {shallowWithIntl} from 'tests/helpers/intl-test-helper';
-
 import Constants from 'utils/constants';
 import EditChannelHeaderModal from 'components/edit_channel_header_modal/edit_channel_header_modal.jsx';
 import Textbox from 'components/textbox';
@@ -23,28 +23,21 @@ describe('components/EditChannelHeaderModal', () => {
         header: 'Fake Channel',
     };
 
-    const serverError = {
-        server_error_id: 'fake-server-error',
-        message: 'some error',
-    };
-
-    const baseProps = {
-        channel,
-        ctrlSend: false,
-        show: false,
-        actions: {
-            closeModal: jest.fn(),
-            patchChannel: jest.fn().mockResolvedValueOnce({error: serverError}).mockResolvedValue({}),
-        },
-    };
+    function emptyFunction() {} //eslint-disable-line no-empty-function
 
     test('should match snapshot, init', () => {
         const wrapper = shallowWithIntl(
-            <EditChannelHeaderModal {...baseProps}/>
-        );
+            <EditChannelHeaderModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel: emptyFunction}}
+            />
+        ).dive({disableLifecycleMethods: true});
         expect(wrapper).toMatchSnapshot();
     });
-    test('edit direct message channel', () => {
+    test('edit dirrect message channel', () => {
         const dmChannel = {
             ...channel,
             type: Constants.DM_CHANNEL,
@@ -52,71 +45,157 @@ describe('components/EditChannelHeaderModal', () => {
 
         const wrapper = shallowWithIntl(
             <EditChannelHeaderModal
-                {...baseProps}
                 channel={dmChannel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel: emptyFunction}}
             />
-        );
+        ).dive({disableLifecycleMethods: true});
 
         expect(wrapper).toMatchSnapshot();
     });
 
     test('submitted', () => {
         const wrapper = shallowWithIntl(
-            <EditChannelHeaderModal {...baseProps}/>
-        );
-
-        wrapper.setState({saving: true});
+            <EditChannelHeaderModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel: emptyFunction}}
+            />
+        ).dive({disableLifecycleMethods: true});
 
         expect(wrapper).toMatchSnapshot();
     });
 
     test('error with intl message', () => {
-        const wrapper = shallowWithIntl(
-            <EditChannelHeaderModal {...baseProps}/>
-        );
+        const serverError = {
+            server_error_id: 'model.channel.is_valid.header.app_error',
+            message: 'some error',
+        };
 
-        wrapper.setState({serverError: {...serverError, server_error_id: 'model.channel.is_valid.header.app_error'}});
+        const wrapper = shallowWithIntl(
+            <EditChannelHeaderModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel: emptyFunction}}
+            />
+        ).dive({disableLifecycleMethods: true});
+
+        wrapper.setProps({
+            channel,
+            serverError,
+            ctrSend: false,
+            requestStatus: RequestStatus.FAILURE,
+            onHide: emptyFunction,
+            actions: {patchChannel: emptyFunction},
+        });
+
         expect(wrapper).toMatchSnapshot();
     });
 
     test('error without intl message', () => {
-        const wrapper = shallowWithIntl(
-            <EditChannelHeaderModal {...baseProps}/>
-        );
+        const serverError = {
+            server_error_id: 'fake-server-errror',
+            message: 'some error',
+        };
 
-        wrapper.setState({serverError});
+        const wrapper = shallowWithIntl(
+            <EditChannelHeaderModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel: emptyFunction}}
+            />
+        ).dive({disableLifecycleMethods: true});
+
+        wrapper.setProps({
+            channel,
+            serverError,
+            ctrSend: false,
+            requestStatus: RequestStatus.FAILURE,
+            onHide: emptyFunction,
+            actions: {patchChannel: emptyFunction},
+        });
+
         expect(wrapper).toMatchSnapshot();
     });
 
-    test('should match state and called actions on handleSave', async () => {
+    test('hide error message on new request', () => {
+        const serverError = {
+            server_error_id: 'fake-server-errror',
+            message: 'some error',
+        };
+
         const wrapper = shallowWithIntl(
-            <EditChannelHeaderModal {...baseProps}/>
-        );
+            <EditChannelHeaderModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel: emptyFunction}}
+            />
+        ).dive({disableLifecycleMethods: true});
 
-        const instance = wrapper.instance();
+        wrapper.setProps({
+            channel,
+            serverError,
+            ctrSend: false,
+            requestStatus: RequestStatus.FAILURE,
+            onHide: emptyFunction,
+            actions: {patchChannel: emptyFunction},
+        });
+        wrapper.setProps({
+            channel,
+            serverError,
+            ctrSend: false,
+            requestStatus: RequestStatus.STARTED,
+            onHide: emptyFunction,
+            actions: {patchChannel: emptyFunction},
+        });
 
-        // on no change, should hide the modal without trying to patch a channel
-        await instance.handleSave();
-        expect(baseProps.actions.closeModal).toHaveBeenCalledTimes(1);
-        expect(baseProps.actions.patchChannel).toHaveBeenCalledTimes(0);
+        expect(wrapper).toMatchSnapshot();
+    });
 
-        // on error, should not close modal and set server error state
-        wrapper.setState({header: 'New header'});
-        await wrapper.instance().handleSave();
-        expect(baseProps.actions.patchChannel).toHaveBeenCalledTimes(1);
-        expect(baseProps.actions.closeModal).toHaveBeenCalledTimes(1);
-        expect(wrapper.state('serverError')).toBe(serverError);
+    test('hide on requestsStatus changed to success', () => {
+        const wrapper = shallowWithIntl(
+            <EditChannelHeaderModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel: emptyFunction}}
+            />
+        ).dive({disableLifecycleMethods: false});
 
-        // on success, should close modal
-        await wrapper.instance().handleSave();
-        expect(baseProps.actions.patchChannel).toHaveBeenCalledTimes(2);
-        expect(baseProps.actions.closeModal).toHaveBeenCalledTimes(2);
+        wrapper.setProps({
+            channel,
+            ctrSend: false,
+            requestStatus: RequestStatus.SUCCESS,
+            onHide: emptyFunction,
+            actions: {patchChannel: emptyFunction},
+        });
+
+        expect(
+            wrapper.state('show')
+        ).toBeFalsy();
     });
 
     test('change header', () => {
         const wrapper = shallowWithIntl(
-            <EditChannelHeaderModal {...baseProps}/>
-        );
+            <EditChannelHeaderModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel: emptyFunction}}
+            />
+        ).dive({disableLifecycleMethods: true});
 
         wrapper.find(Textbox).simulate('change', {target: {value: 'header'}});
 
@@ -126,29 +205,36 @@ describe('components/EditChannelHeaderModal', () => {
     });
 
     test('patch on save button click', () => {
+        const patchChannel = jest.fn();
         const wrapper = shallowWithIntl(
-            <EditChannelHeaderModal {...baseProps}/>
-        );
+            <EditChannelHeaderModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel}}
+            />
+        ).dive({disableLifecycleMethods: true});
 
-        const newHeader = 'New channel header';
-        wrapper.setState({header: newHeader});
         wrapper.find('.save-button').simulate('click');
 
-        expect(baseProps.actions.patchChannel).toBeCalledWith('fake-id', {header: newHeader});
+        expect(patchChannel).toBeCalledWith('fake-id', {header: 'Fake Channel'});
     });
 
     test('patch on enter keypress event with ctrl', () => {
+        const patchChannel = jest.fn();
         const wrapper = shallowWithIntl(
             <EditChannelHeaderModal
-                {...baseProps}
+                channel={channel}
                 ctrlSend={true}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel}}
             />
-        );
+        ).dive({disableLifecycleMethods: true});
 
-        const newHeader = 'New channel header';
-        wrapper.setState({header: newHeader});
         wrapper.find(Textbox).simulate('keypress', {
-            preventDefault: jest.fn(),
+            preventDefault: emptyFunction,
             key: KeyCodes.ENTER[0],
             which: KeyCodes.ENTER[1],
             shiftKey: false,
@@ -156,18 +242,23 @@ describe('components/EditChannelHeaderModal', () => {
             ctrlKey: true,
         });
 
-        expect(baseProps.actions.patchChannel).toBeCalledWith('fake-id', {header: newHeader});
+        expect(patchChannel).toBeCalledWith('fake-id', {header: 'Fake Channel'});
     });
 
     test('patch on enter keypress', () => {
+        const patchChannel = jest.fn();
         const wrapper = shallowWithIntl(
-            <EditChannelHeaderModal {...baseProps}/>
-        );
+            <EditChannelHeaderModal
+                channel={channel}
+                ctrlSend={false}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel}}
+            />
+        ).dive({disableLifecycleMethods: true});
 
-        const newHeader = 'New channel header';
-        wrapper.setState({header: newHeader});
         wrapper.find(Textbox).simulate('keypress', {
-            preventDefault: jest.fn(),
+            preventDefault: emptyFunction,
             key: KeyCodes.ENTER[0],
             which: KeyCodes.ENTER[1],
             shiftKey: false,
@@ -175,21 +266,23 @@ describe('components/EditChannelHeaderModal', () => {
             ctrlKey: false,
         });
 
-        expect(baseProps.actions.patchChannel).toBeCalledWith('fake-id', {header: newHeader});
+        expect(patchChannel).toBeCalledWith('fake-id', {header: 'Fake Channel'});
     });
 
     test('patch on enter keydown', () => {
+        const patchChannel = jest.fn();
         const wrapper = shallowWithIntl(
             <EditChannelHeaderModal
-                {...baseProps}
+                channel={channel}
                 ctrlSend={true}
+                requestStatus={RequestStatus.NOT_STARTED}
+                onHide={emptyFunction}
+                actions={{patchChannel}}
             />
-        );
+        ).dive({disableLifecycleMethods: true});
 
-        const newHeader = 'New channel header';
-        wrapper.setState({header: newHeader});
         wrapper.find(Textbox).simulate('keydown', {
-            preventDefault: jest.fn(),
+            preventDefault: emptyFunction,
             key: KeyCodes.ENTER[0],
             keyCode: KeyCodes.ENTER[1],
             which: KeyCodes.ENTER[1],
@@ -198,6 +291,6 @@ describe('components/EditChannelHeaderModal', () => {
             ctrlKey: true,
         });
 
-        expect(baseProps.actions.patchChannel).toBeCalledWith('fake-id', {header: newHeader});
+        expect(patchChannel).toBeCalledWith('fake-id', {header: 'Fake Channel'});
     });
 });

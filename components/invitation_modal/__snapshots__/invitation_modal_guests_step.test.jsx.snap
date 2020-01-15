@@ -4,22 +4,20 @@ exports[`components/invitation_modal/InvitationModalGuestsStep should match the 
 <div
   className="InvitationModalGuestsStep"
 >
+  <BackIcon
+    className="back"
+    id="backIcon"
+    onClick={[MockFunction]}
+  />
   <div
     className="modal-icon"
   >
     <InviteIcon />
   </div>
-  <h1
-    id="invitation_modal_title"
-  >
+  <h1>
     <InjectIntl(FormattedMarkdownMessage)
-      defaultMessage="Invite **Guests** to {teamName}"
+      defaultMessage="Invite **Guests**"
       id="invitation_modal.guests.title"
-      values={
-        Object {
-          "teamName": "Test Team",
-        }
-      }
     />
   </h1>
   <div
@@ -48,7 +46,7 @@ exports[`components/invitation_modal/InvitationModalGuestsStep should match the 
       className="help-text"
     >
       <FormattedMessage
-        defaultMessage="Add existing guests or send email invites to new guests."
+        defaultMessage="Search and add guests or email invite new users."
         id="invitation_modal.guests.add_people.description"
         values={Object {}}
       />

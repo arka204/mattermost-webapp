@@ -1,7 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {shallow} from 'enzyme';
 import React from 'react';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
@@ -11,6 +10,7 @@ import {getPostThread} from 'mattermost-redux/actions/posts';
 import {ErrorPageTypes} from 'utils/constants';
 import {browserHistory} from 'utils/browser_history';
 
+import {shallowWithIntl} from 'tests/helpers/intl-test-helper.jsx';
 import {focusPost} from 'components/permalink_view/actions';
 import PermalinkView from 'components/permalink_view/permalink_view.jsx';
 
@@ -77,7 +77,7 @@ describe('components/PermalinkView', () => {
     };
 
     test('should match snapshot', () => {
-        const wrapper = shallow(
+        const wrapper = shallowWithIntl(
             <PermalinkView {...baseProps}/>,
         );
 
@@ -86,7 +86,7 @@ describe('components/PermalinkView', () => {
     });
 
     test('should call baseProps.actions.focusPost on doPermalinkEvent', async () => {
-        const wrapper = shallow(
+        const wrapper = shallowWithIntl(
             <PermalinkView {...baseProps}/>
         );
 
@@ -99,7 +99,7 @@ describe('components/PermalinkView', () => {
     });
 
     test('should call baseProps.actions.focusPost when postid changes', async () => {
-        const wrapper = shallow(
+        const wrapper = shallowWithIntl(
             <PermalinkView {...baseProps}/>
         );
         const newPostid = `${baseProps.match.params.postid}_new`;
@@ -112,7 +112,7 @@ describe('components/PermalinkView', () => {
     test('should match snapshot with archived channel', () => {
         const props = {...baseProps, channelIsArchived: true};
 
-        const wrapper = shallow(
+        const wrapper = shallowWithIntl(
             <PermalinkView {...props}/>
         );
 

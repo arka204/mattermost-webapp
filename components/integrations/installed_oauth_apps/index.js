@@ -20,6 +20,7 @@ function mapStateToProps(state) {
     return {
         canManageOauth: haveISystemPermission(state, {permission: Permissions.MANAGE_OAUTH}),
         oauthApps: getOAuthApps(state),
+        regenOAuthAppSecretRequest: state.requests.integrations.updateOAuthApp,
         enableOAuthServiceProvider,
     };
 }

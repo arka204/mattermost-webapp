@@ -4,22 +4,19 @@ exports[`components/invitation_modal/InvitationModalMembersStep should match the
 <div
   className="InvitationModalMembersStep"
 >
+  <BackIcon
+    className="back"
+    onClick={[MockFunction]}
+  />
   <div
     className="modal-icon"
   >
-    <InviteMembersIcon />
+    <InviteIcon />
   </div>
-  <h1
-    id="invitation_modal_title"
-  >
+  <h1>
     <InjectIntl(FormattedMarkdownMessage)
-      defaultMessage="Invite **Members** to {teamName}"
+      defaultMessage="Invite **Members**"
       id="invitation_modal.members.title"
-      values={
-        Object {
-          "teamName": "Test Team",
-        }
-      }
     />
   </h1>
   <div
@@ -37,7 +34,6 @@ exports[`components/invitation_modal/InvitationModalMembersStep should match the
       className="share-link-input-block"
     >
       <input
-        aria-label="team invite link"
         className="share-link-input"
         data-testid="shareLinkInput"
         readOnly={true}
@@ -61,7 +57,7 @@ exports[`components/invitation_modal/InvitationModalMembersStep should match the
       className="help-text"
     >
       <FormattedMessage
-        defaultMessage="Share this link to invite people to this team."
+        defaultMessage="Share this link to grant member access to this team."
         id="invitation_modal.members.share_link.description"
         values={Object {}}
       />
@@ -85,7 +81,7 @@ exports[`components/invitation_modal/InvitationModalMembersStep should match the
   >
     <h2>
       <FormattedMessage
-        defaultMessage="Add or Invite People"
+        defaultMessage="Invite People"
         id="invitation_modal.members.search_and_add.title"
         values={Object {}}
       />
@@ -105,7 +101,7 @@ exports[`components/invitation_modal/InvitationModalMembersStep should match the
       className="help-text"
     >
       <FormattedMessage
-        defaultMessage="Add existing members or send email invites to new members."
+        defaultMessage="Search and add members from other teams or email invite new users."
         id="invitation_modal.members.search-and-add.description"
         values={Object {}}
       />

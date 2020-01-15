@@ -3,6 +3,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {FormattedMessage} from 'react-intl';
 
 import {emailToOAuth} from 'actions/admin_actions.jsx';
@@ -23,15 +24,13 @@ export default class EmailToOAuth extends React.PureComponent {
         super(props);
 
         this.state = {showMfa: false, password: ''};
-
-        this.passwordInput = React.createRef();
     }
 
     preSubmit = (e) => {
         e.preventDefault();
         var state = {};
 
-        var password = this.passwordInput.current.value;
+        var password = ReactDOM.findDOMNode(this.refs.password).value;
         if (!password) {
             state.error = Utils.localizeMessage('claim.email_to_oauth.pwdError', 'Please enter your password.');
             this.setState(state);
@@ -125,7 +124,7 @@ export default class EmailToOAuth extends React.PureComponent {
                             type='password'
                             className='form-control'
                             name='password'
-                            ref={this.passwordInput}
+                            ref='password'
                             placeholder={{id: t('claim.email_to_oauth.pwd'), defaultMessage: 'Password'}}
                             spellCheck='false'
                         />

@@ -188,7 +188,6 @@ export default class SingleImageView extends React.PureComponent {
                                 fileInfo={this.props.fileInfo}
                                 onImageLoaded={this.imageLoaded}
                                 showLoader={this.props.isEmbedVisible}
-                                handleSmallImageContainer={true}
                             />
                         </div>
                     </div>

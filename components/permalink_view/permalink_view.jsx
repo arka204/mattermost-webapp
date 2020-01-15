@@ -3,16 +3,14 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, intlShape} from 'react-intl';
 import {Link} from 'react-router-dom';
 
 import ChannelHeader from 'components/channel_header';
-import LocalizedIcon from 'components/localized_icon';
 import PostView from 'components/post_view';
 import FormattedMarkdownMessage from 'components/formatted_markdown_message';
 
 import Constants from 'utils/constants.jsx';
-import {t} from 'utils/i18n';
 import * as Utils from 'utils/utils.jsx';
 
 export default class PermalinkView extends React.PureComponent {
@@ -34,6 +32,10 @@ export default class PermalinkView extends React.PureComponent {
         actions: PropTypes.shape({
             focusPost: PropTypes.func.isRequired,
         }).isRequired,
+    };
+
+    static contextTypes = {
+        intl: intlShape.isRequired,
     };
 
     static getDerivedStateFromProps(props, state) {
@@ -93,6 +95,7 @@ export default class PermalinkView extends React.PureComponent {
             match,
             teamName,
         } = this.props;
+        const {formatMessage} = this.context.intl;
 
         if (!this.isStateValid()) {
             return (
@@ -134,9 +137,9 @@ export default class PermalinkView extends React.PureComponent {
                             id='center_panel.recent'
                             defaultMessage='Click here to jump to recent messages. '
                         />
-                        <LocalizedIcon
+                        <i
                             className='fa fa-arrow-down'
-                            title={{id: t('center_panel.recent.icon'), defaultMessage: 'Jump to recent messages Icon'}}
+                            title={formatMessage({id: 'center_panel.recent.icon', defaultMessage: 'Jump to recent messages Icon'})}
                         />
                     </Link>
                 </div>

@@ -9,10 +9,7 @@ export default class NotificationSeparator extends React.PureComponent<React.Pro
     public render() {
         const {children} = this.props;
         return (
-            <div
-                className='Separator NotificationSeparator'
-                data-testid='NotificationSeparator'
-            >
+            <div className='Separator NotificationSeparator'>
                 <hr className='separator__hr'/>
                 {children && (
                     <div className='separator__text'>

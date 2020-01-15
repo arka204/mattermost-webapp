@@ -18,20 +18,6 @@ export default class InvitationModalInitialStep extends React.Component {
         goToGuests: PropTypes.func.isRequired,
     }
 
-    onMembersKeyDown = (e) => {
-        const code = e.which;
-        if ((code === 13) || (code === 32)) {
-            this.props.goToMembers();
-        }
-    }
-
-    onGuestsKeyDown = (e) => {
-        const code = e.which;
-        if ((code === 13) || (code === 32)) {
-            this.props.goToGuests();
-        }
-    }
-
     render() {
         const teamName = this.props.teamName;
         return (
@@ -39,7 +25,7 @@ export default class InvitationModalInitialStep extends React.Component {
                 <div className='modal-icon'>
                     <InviteIcon/>
                 </div>
-                <h1 id='invitation_modal_title'>
+                <h1>
                     <FormattedMarkdownMessage
                         id='invitation_modal.title'
                         defaultMessage='Invite people to **{teamName}**'
@@ -50,13 +36,9 @@ export default class InvitationModalInitialStep extends React.Component {
                     className='invitation-modal-option'
                     onClick={this.props.goToMembers}
                     data-testid='inviteMembersLink'
-                    tabIndex='0'
-                    onKeyDown={this.onMembersKeyDown}
-                    aria-labeledby='inviteMembersSectionHeader'
-                    aria-describedby='inviteMembersSectionDescription'
                 >
                     <div data-testid='inviteMembersSection'>
-                        <h2 id='inviteMembersSectionHeader'>
+                        <h2>
                             <FormattedMarkdownMessage
                                 id='invitation_modal.invite_members.title'
                                 defaultMessage='Invite **Members**'
@@ -65,9 +47,7 @@ export default class InvitationModalInitialStep extends React.Component {
                         <FormattedMessage
                             id='invitation_modal.invite_members.description'
                             defaultMessage='Invite new team members with a link or by email. Team members have access to messages and files in open teams and public channels.'
-                        >
-                            {(text) => (<span id='inviteMembersSectionDescription'>{text}</span>)}
-                        </FormattedMessage>
+                        />
                     </div>
                     <ArrowRightIcon className='arrow'/>
                 </div>
@@ -75,13 +55,9 @@ export default class InvitationModalInitialStep extends React.Component {
                     className='invitation-modal-option'
                     onClick={this.props.goToGuests}
                     data-testid='inviteGuestLink'
-                    tabIndex='0'
-                    onKeyDown={this.onGuestsKeyDown}
-                    aria-labeledby='inviteGuestsSectionHeader'
-                    aria-describedby='inviteGuestsSectionDescription'
                 >
                     <div>
-                        <h2 id='inviteGuestsSectionHeader'>
+                        <h2>
                             <FormattedMarkdownMessage
                                 id='invitation_modal.invite_guests.title'
                                 defaultMessage='Invite **Guests**'
@@ -90,9 +66,7 @@ export default class InvitationModalInitialStep extends React.Component {
                         <FormattedMessage
                             id='invitation_modal.invite_guests.description'
                             defaultMessage='Invite guests to one or more channels. Guests only have access to messages, files, and people in the channels they are members of.'
-                        >
-                            {(text) => (<span id='inviteGuestsSectionDescription'>{text}</span>)}
-                        </FormattedMessage>
+                        />
                     </div>
                     <ArrowRightIcon className='arrow'/>
                 </div>

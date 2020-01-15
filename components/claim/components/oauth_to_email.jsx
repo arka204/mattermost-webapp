@@ -3,6 +3,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {FormattedMessage} from 'react-intl';
 
 import {oauthToEmail} from 'actions/admin_actions.jsx';
@@ -23,16 +24,13 @@ export default class OAuthToEmail extends React.PureComponent {
         super(props);
 
         this.state = {};
-
-        this.passwordInput = React.createRef();
-        this.passwordConfirmInput = React.createRef();
     }
 
     submit = (e) => {
         e.preventDefault();
         const state = {};
 
-        const password = this.passwordInput.current.value;
+        const password = ReactDOM.findDOMNode(this.refs.password).value;
         if (!password) {
             state.error = Utils.localizeMessage('claim.oauth_to_email.enterPwd', 'Please enter a password.');
             this.setState(state);
@@ -45,7 +43,7 @@ export default class OAuthToEmail extends React.PureComponent {
             return;
         }
 
-        const confirmPassword = this.passwordConfirmInput.current.value;
+        const confirmPassword = ReactDOM.findDOMNode(this.refs.passwordconfirm).value;
         if (!confirmPassword || password !== confirmPassword) {
             state.error = Utils.localizeMessage('claim.oauth_to_email.pwdNotMatch', 'Passwords do not match.');
             this.setState(state);
@@ -114,7 +112,7 @@ export default class OAuthToEmail extends React.PureComponent {
                             type='password'
                             className='form-control'
                             name='password'
-                            ref={this.passwordInput}
+                            ref='password'
                             placeholder={{id: t('claim.oauth_to_email.newPwd'), defaultMessage: 'New Password'}}
                             spellCheck='false'
                         />
@@ -124,7 +122,7 @@ export default class OAuthToEmail extends React.PureComponent {
                             type='password'
                             className='form-control'
                             name='passwordconfirm'
-                            ref={this.passwordConfirmInput}
+                            ref='passwordconfirm'
                             placeholder={{id: t('claim.oauth_to_email.confirm'), defaultMessage: 'Confirm Password'}}
                             spellCheck='false'
                         />

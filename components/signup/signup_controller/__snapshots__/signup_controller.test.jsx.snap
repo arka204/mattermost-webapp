@@ -135,15 +135,9 @@ exports[`components/SignupController should match snapshot for all signup option
           to="/signup_email"
         >
           <span>
-            <LocalizedIcon
+            <span
               className="icon fa fa-envelope"
-              component="span"
-              title={
-                Object {
-                  "defaultMessage": "Email Icon",
-                  "id": "signup.email.icon",
-                }
-              }
+              title="Email Icon"
             />
             <FormattedMessage
               defaultMessage="Email and Password"
@@ -243,15 +237,9 @@ exports[`components/SignupController should match snapshot for all signup option
           to="/signup_email"
         >
           <span>
-            <LocalizedIcon
+            <span
               className="icon fa fa-envelope"
-              component="span"
-              title={
-                Object {
-                  "defaultMessage": "Email Icon",
-                  "id": "signup.email.icon",
-                }
-              }
+              title="Email Icon"
             />
             <FormattedMessage
               defaultMessage="Email and Password"
@@ -320,15 +308,9 @@ exports[`components/SignupController should match snapshot for all signup option
           to="/login?extra=create_ldap"
         >
           <span>
-            <LocalizedIcon
+            <span
               className="icon fa fa-folder-open fa--margin-top"
-              component="span"
-              title={
-                Object {
-                  "defaultMessage": "AD/LDAP Icon",
-                  "id": "signup.ldap.icon",
-                }
-              }
+              title="AD/LDAP Icon"
             />
             <span>
               <FormattedMessage
@@ -345,15 +327,9 @@ exports[`components/SignupController should match snapshot for all signup option
           to="/login/sso/saml?action=signup"
         >
           <span>
-            <LocalizedIcon
+            <span
               className="icon fa fa-lock fa--margin-top"
-              component="span"
-              title={
-                Object {
-                  "defaultMessage": "SAML Icon",
-                  "id": "signup.saml.icon",
-                }
-              }
+              title="SAML Icon"
             />
             <span>
               SAML

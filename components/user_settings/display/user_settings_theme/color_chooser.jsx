@@ -17,7 +17,7 @@ class ColorChooser extends React.Component {
         /*
          * The label of setting that we will choose
          */
-        label: PropTypes.node.isRequired,
+        label: PropTypes.string.isRequired,
 
         /*
          * Selected color

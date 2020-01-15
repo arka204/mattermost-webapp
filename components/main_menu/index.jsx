@@ -75,7 +75,6 @@ function mapStateToProps(state) {
         currentUser,
         isMentionSearch: rhsState === RHSStates.MENTION,
         teamIsGroupConstrained: Boolean(currentTeam.group_constrained),
-        isLicensedForLDAPGroups: state.entities.general.license.LDAPGroups === 'true',
     };
 }
 

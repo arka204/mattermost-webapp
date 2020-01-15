@@ -113,7 +113,6 @@ export default class PostBodyAdditionalContent extends React.PureComponent {
 
                 return (
                     <YoutubeVideo
-                        postId={this.props.post.id}
                         link={embed.url}
                         show={this.props.isEmbedVisible}
                     />
@@ -122,7 +121,6 @@ export default class PostBodyAdditionalContent extends React.PureComponent {
 
             return (
                 <PostAttachmentOpenGraph
-                    postId={this.props.post.id}
                     link={embed.url}
                     isEmbedVisible={this.props.isEmbedVisible}
                     post={this.props.post}

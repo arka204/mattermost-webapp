@@ -25,13 +25,6 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
     >
       <SaveButton
         btnClass="btn-primary"
-        defaultMessage={
-          <FormattedMessage
-            defaultMessage="Save"
-            id="save_button.save"
-            values={Object {}}
-          />
-        }
         disabled={true}
         extraClasses=""
         onClick={[Function]}
@@ -50,6 +43,7 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
       </div>
       <Overlay
         animation={[Function]}
+        delayShow={400}
         placement="top"
         rootClose={false}
         show={false}
@@ -90,13 +84,6 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
     >
       <SaveButton
         btnClass="btn-primary"
-        defaultMessage={
-          <FormattedMessage
-            defaultMessage="Save"
-            id="save_button.save"
-            values={Object {}}
-          />
-        }
         disabled={true}
         extraClasses=""
         onClick={[Function]}
@@ -115,6 +102,7 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
       </div>
       <Overlay
         animation={[Function]}
+        delayShow={400}
         placement="top"
         rootClose={false}
         show={false}
@@ -155,13 +143,6 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
     >
       <SaveButton
         btnClass="btn-primary"
-        defaultMessage={
-          <FormattedMessage
-            defaultMessage="Save"
-            id="save_button.save"
-            values={Object {}}
-          />
-        }
         disabled={true}
         extraClasses=""
         onClick={[Function]}
@@ -180,6 +161,7 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
       </div>
       <Overlay
         animation={[Function]}
+        delayShow={400}
         placement="top"
         rootClose={false}
         show={false}
@@ -220,13 +202,6 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
     >
       <SaveButton
         btnClass="btn-primary"
-        defaultMessage={
-          <FormattedMessage
-            defaultMessage="Save"
-            id="save_button.save"
-            values={Object {}}
-          />
-        }
         disabled={true}
         extraClasses=""
         onClick={[Function]}
@@ -245,6 +220,7 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
       </div>
       <Overlay
         animation={[Function]}
+        delayShow={400}
         placement="top"
         rootClose={false}
         show={false}

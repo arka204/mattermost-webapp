@@ -148,7 +148,7 @@ export default class PostList extends React.PureComponent {
         } else if (this.props.isFirstLoad) {
             await this.props.actions.loadUnreads(channelId);
         } else if (this.props.latestPostTimeStamp) {
-            await this.props.actions.syncPostsInChannel(channelId, this.props.latestPostTimeStamp, false);
+            await this.props.actions.syncPostsInChannel(channelId, this.props.latestPostTimeStamp);
         } else {
             await this.props.actions.loadLatestPosts(channelId);
         }
@@ -266,38 +266,42 @@ export default class PostList extends React.PureComponent {
     render() {
         if (!this.props.postListIds) {
             return (
-                <LoadingScreen
-                    position='absolute'
-                    key='loading'
-                />
+                <div id='post-list'>
+                    <LoadingScreen
+                        position='absolute'
+                        key='loading'
+                    />
+                </div>
             );
         }
 
         return (
-            <div
-                ref='postlist'
-                className='post-list-holder-by-time'
-                key={'postlist-' + this.props.channelId}
-            >
-                <div className='post-list__table'>
-                    <div
-                        id='virtualizedPostListContent'
-                        ref='postListContent'
-                        className='post-list__content'
-                    >
-                        <VirtPostList
-                            loadingNewerPosts={this.state.loadingNewerPosts}
-                            loadingOlderPosts={this.state.loadingOlderPosts}
-                            atOldestPost={this.props.atOldestPost}
-                            atLatestPost={this.props.atLatestPost}
-                            focusedPostId={this.props.focusedPostId}
-                            channelId={this.props.channelId}
-                            autoRetryEnable={this.state.autoRetryEnable}
-                            actions={this.actionsForPostList}
-                            postListIds={this.props.formattedPostIds}
-                            latestPostTimeStamp={this.props.latestPostTimeStamp}
-                            latestAriaLabelFunc={this.props.latestAriaLabelFunc}
-                        />
+            <div id='post-list'>
+                <div
+                    ref='postlist'
+                    className='post-list-holder-by-time'
+                    key={'postlist-' + this.props.channelId}
+                >
+                    <div className='post-list__table'>
+                        <div
+                            id='virtualizedPostListContent'
+                            ref='postListContent'
+                            className='post-list__content'
+                        >
+                            <VirtPostList
+                                loadingNewerPosts={this.state.loadingNewerPosts}
+                                loadingOlderPosts={this.state.loadingOlderPosts}
+                                atOldestPost={this.props.atOldestPost}
+                                atLatestPost={this.props.atLatestPost}
+                                focusedPostId={this.props.focusedPostId}
+                                channelId={this.props.channelId}
+                                autoRetryEnable={this.state.autoRetryEnable}
+                                actions={this.actionsForPostList}
+                                postListIds={this.props.formattedPostIds}
+                                latestPostTimeStamp={this.props.latestPostTimeStamp}
+                                latestAriaLabelFunc={this.props.latestAriaLabelFunc}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

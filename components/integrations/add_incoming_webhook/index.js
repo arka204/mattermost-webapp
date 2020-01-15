@@ -14,6 +14,7 @@ function mapStateToProps(state) {
     const enablePostIconOverride = config.EnablePostIconOverride === 'true';
 
     return {
+        createIncomingHookRequest: state.requests.integrations.createIncomingHook,
         enablePostUsernameOverride,
         enablePostIconOverride,
     };

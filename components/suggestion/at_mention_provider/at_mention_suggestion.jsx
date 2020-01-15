@@ -112,7 +112,6 @@ export default class AtMentionSuggestion extends Suggestion {
                 className={className}
                 data-testid={`mentionSuggestion_${username}`}
                 onClick={this.handleClick}
-                onMouseMove={this.handleMouseMove}
                 {...Suggestion.baseProps}
             >
                 {icon}

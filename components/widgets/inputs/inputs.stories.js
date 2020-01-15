@@ -16,7 +16,6 @@ storiesOf('Inputs', module).
         () => {
             const WrapperComponent = () => {
                 const placeholder = text('Placeholder', 'Placeholder');
-                const ariaLabel = text('Aria Label', 'Aria Label');
                 const loadingMessageDefault = text('Loading Message', 'Loading');
                 const noOptionsMessageDefault = text('No Options Message', 'No channels found');
                 const options = [
@@ -38,7 +37,6 @@ storiesOf('Inputs', module).
                     <ChannelsInput
                         channelsLoader={channelsLoader}
                         placeholder={placeholder}
-                        ariaLabel={ariaLabel}
                         onChange={setValue}
                         value={value}
                         onInputChange={setInputValue}
@@ -60,7 +58,6 @@ storiesOf('Inputs', module).
         () => {
             const WrapperComponent = () => {
                 const placeholder = text('Placeholder', 'Placeholder');
-                const ariaLabel = text('Aria Label', 'Aria Label');
                 const loadingMessageDefault = text('Loading Message', 'Loading');
                 const noMatchMessageDefault = text('No Match Message', 'No one found matching **{text}**, type email address');
                 const validAddressMessageDefault = text('Valid Address', 'Add **{email}**');
@@ -90,7 +87,6 @@ storiesOf('Inputs', module).
                     <UsersEmailsInput
                         usersLoader={usersLoader}
                         placeholder={placeholder}
-                        ariaLabel={ariaLabel}
                         onChange={setValue}
                         value={value}
                         onInputChange={setInputValue}

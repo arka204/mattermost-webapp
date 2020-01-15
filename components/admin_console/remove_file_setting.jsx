@@ -5,7 +5,7 @@ import $ from 'jquery';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Setting from './setting';
+import Setting from './setting.jsx';
 
 export default class RemoveFileSetting extends Setting {
     static get propTypes() {

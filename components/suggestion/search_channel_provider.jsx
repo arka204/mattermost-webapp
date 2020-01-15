@@ -21,9 +21,6 @@ function itemToName(item) {
     if (item.type === Constants.GM_CHANNEL) {
         return '@' + item.display_name.replace(/ /g, '');
     }
-    if (item.type === Constants.OPEN_CHANNEL || item.type === Constants.PRIVATE_CHANNEL) {
-        return item.display_name + ' (~' + item.name + ')';
-    }
     return item.name;
 }
 
@@ -53,10 +50,6 @@ class SearchChannelSuggestion extends Suggestion {
             <div
                 onClick={this.handleClick}
                 className={className}
-                onMouseMove={this.handleMouseMove}
-                ref={(node) => {
-                    this.node = node;
-                }}
                 {...Suggestion.baseProps}
             >
                 <SelectIcon/>
@@ -96,7 +89,7 @@ export default class SearchChannelProvider extends Provider {
                     // MM-12677 When this is migrated this needs to be fixed to pull the user's locale
                     //
                     const channels = data.sort(sortChannelsByTypeAndDisplayName.bind(null, 'en'));
-                    const channelNames = channels.map((channel) => channel.name);
+                    const channelNames = channels.map(itemToName);
 
                     resultsCallback({
                         matchedPretext: channelPrefix,

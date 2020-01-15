@@ -4,17 +4,14 @@
 import $ from 'jquery';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {defineMessages, FormattedMessage} from 'react-intl';
+import {OverlayTrigger, Popover} from 'react-bootstrap';
+import {defineMessages, FormattedMessage, intlShape} from 'react-intl';
 
 import {t} from 'utils/i18n';
 import 'bootstrap-colorpicker';
 
 import Constants from 'utils/constants';
 import * as UserAgent from 'utils/user_agent';
-
-import LocalizedIcon from 'components/localized_icon';
-import OverlayTrigger from 'components/overlay_trigger';
-import Popover from 'components/widgets/popover';
 
 import ColorChooser from './color_chooser.jsx';
 
@@ -117,6 +114,10 @@ export default class CustomThemeChooser extends React.Component {
     static propTypes = {
         theme: PropTypes.object.isRequired,
         updateTheme: PropTypes.func.isRequired,
+    };
+
+    static contextTypes = {
+        intl: intlShape.isRequired,
     };
 
     constructor(props) {
@@ -247,6 +248,7 @@ export default class CustomThemeChooser extends React.Component {
     }
 
     render() {
+        const {formatMessage} = this.context.intl;
         const theme = this.props.theme;
 
         const sidebarElements = [];
@@ -267,13 +269,13 @@ export default class CustomThemeChooser extends React.Component {
                             value={codeTheme.id}
                         >
                             {codeTheme.uiName}
-                        </option>,
+                        </option>
                     );
                 });
 
                 var popoverContent = (
                     <Popover
-                        popoverStyle='info'
+                        bsStyle='info'
                         id='code-popover'
                         className='code-popover'
                     >
@@ -290,9 +292,7 @@ export default class CustomThemeChooser extends React.Component {
                         className='col-sm-6 form-group'
                         key={'custom-theme-key' + index}
                     >
-                        <label className='custom-label'>
-                            <FormattedMessage {...messages[element.id]}/>
-                        </label>
+                        <label className='custom-label'>{formatMessage(messages[element.id])}</label>
                         <div
                             className='input-group theme-group group--code dropdown'
                             id={element.id}
@@ -318,7 +318,7 @@ export default class CustomThemeChooser extends React.Component {
                                 </span>
                             </OverlayTrigger>
                         </div>
-                    </div>,
+                    </div>
                 );
             } else if (element.group === 'centerChannelElements') {
                 centerChannelElements.push(
@@ -328,11 +328,11 @@ export default class CustomThemeChooser extends React.Component {
                     >
                         <ColorChooser
                             id={element.id}
-                            label={<FormattedMessage {...messages[element.id]}/>}
+                            label={formatMessage(messages[element.id])}
                             color={theme[element.id]}
                             onChange={this.handleColorChange}
                         />
-                    </div>,
+                    </div>
                 );
             } else if (element.group === 'sidebarElements') {
                 // Need to support old typo mentionBj element for mentionBg
@@ -348,11 +348,11 @@ export default class CustomThemeChooser extends React.Component {
                     >
                         <ColorChooser
                             id={element.id}
-                            label={<FormattedMessage {...messages[element.id]}/>}
+                            label={formatMessage(messages[element.id])}
                             color={color}
                             onChange={this.handleColorChange}
                         />
-                    </div>,
+                    </div>
                 );
             } else {
                 linkAndButtonElements.push(
@@ -362,11 +362,11 @@ export default class CustomThemeChooser extends React.Component {
                     >
                         <ColorChooser
                             id={element.id}
-                            label={<FormattedMessage {...messages[element.id]}/>}
+                            label={formatMessage(messages[element.id])}
                             color={theme[element.id]}
                             onChange={this.handleColorChange}
                         />
-                    </div>,
+                    </div>
                 );
             }
         });
@@ -405,13 +405,13 @@ export default class CustomThemeChooser extends React.Component {
                             defaultMessage='Sidebar Styles'
                         />
                         <div className='header__icon'>
-                            <LocalizedIcon
+                            <i
                                 className='fa fa-plus'
-                                title={{id: t('generic_icons.expand'), defaultMessage: 'Expand Icon'}}
+                                title={formatMessage({id: 'generic_icons.expand', defaultMessage: 'Expand Icon'})}
                             />
-                            <LocalizedIcon
+                            <i
                                 className='fa fa-minus'
-                                title={{id: t('generic_icons.collapse'), defaultMessage: 'Collapse Icon'}}
+                                title={formatMessage({id: 'generic_icons.collapse', defaultMessage: 'Collapse Icon'})}
                             />
                         </div>
                     </div>
@@ -422,10 +422,12 @@ export default class CustomThemeChooser extends React.Component {
                         {sidebarElements}
                     </div>
                 </div>
-                <div className='theme-elements row'>
+                <div
+                    id='centerChannelStyles'
+                    className='theme-elements row'
+                >
                     <div
                         ref='centerChannelStylesHeader'
-                        id='centerChannelStyles'
                         className='theme-elements__header'
                         onClick={this.toggleCenterChannelStyles}
                     >
@@ -434,13 +436,13 @@ export default class CustomThemeChooser extends React.Component {
                             defaultMessage='Center Channel Styles'
                         />
                         <div className='header__icon'>
-                            <LocalizedIcon
+                            <i
                                 className='fa fa-plus'
-                                title={{id: t('generic_icons.expand'), defaultMessage: 'Expand Icon'}}
+                                title={formatMessage({id: 'generic_icons.expand', defaultMessage: 'Expand Icon'})}
                             />
-                            <LocalizedIcon
+                            <i
                                 className='fa fa-minus'
-                                title={{id: t('generic_icons.collapse'), defaultMessage: 'Collapse Icon'}}
+                                title={formatMessage({id: 'generic_icons.collapse', defaultMessage: 'Collapse Icon'})}
                             />
                         </div>
                     </div>
@@ -464,13 +466,13 @@ export default class CustomThemeChooser extends React.Component {
                             defaultMessage='Link and Button Styles'
                         />
                         <div className='header__icon'>
-                            <LocalizedIcon
+                            <i
                                 className='fa fa-plus'
-                                title={{id: t('generic_icons.expand'), defaultMessage: 'Expand Icon'}}
+                                title={formatMessage({id: 'generic_icons.expand', defaultMessage: 'Expand Icon'})}
                             />
-                            <LocalizedIcon
+                            <i
                                 className='fa fa-minus'
-                                title={{id: t('generic_icons.collapse'), defaultMessage: 'Collapse Icon'}}
+                                title={formatMessage({id: 'generic_icons.collapse', defaultMessage: 'Collapse Icon'})}
                             />
                         </div>
                     </div>

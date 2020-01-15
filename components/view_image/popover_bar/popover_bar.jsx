@@ -90,7 +90,6 @@ export default class PopoverBar extends React.PureComponent {
 
         return (
             <div
-                data-testid='fileCountFooter'
                 ref='imageFooter'
                 className='modal-button-bar'
             >

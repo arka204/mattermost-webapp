@@ -2,14 +2,14 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
+import {OverlayTrigger} from 'react-bootstrap';
 
-import OverlayTrigger from 'components/overlay_trigger';
 import ProfilePopover from 'components/profile_popover';
 import StatusIcon from 'components/status_icon';
 import Avatar from 'components/widgets/users/avatar';
 
 interface MMOverlayTrigger extends OverlayTrigger {
-    hide?: () => void;
+    hide: () => void;
 }
 
 type Props = {
@@ -27,7 +27,7 @@ type Props = {
 }
 
 export default class ProfilePicture extends React.PureComponent<Props> {
-    public overlay!: MMOverlayTrigger;
+    public overlay = React.createRef<MMOverlayTrigger>();
 
     public static defaultProps = {
         size: 'md',
@@ -38,13 +38,9 @@ export default class ProfilePicture extends React.PureComponent<Props> {
     };
 
     public hideProfilePopover = () => {
-        if (this.overlay) {
-            this.overlay.hide!();
+        if (this.overlay.current && typeof this.overlay.current.hide === 'function') {
+            this.overlay.current.hide();
         }
-    }
-
-    public setOverlayRef = (ref: OverlayTrigger) => {
-        this.overlay = ref;
     }
 
     public render() {
@@ -59,7 +55,7 @@ export default class ProfilePicture extends React.PureComponent<Props> {
         if (this.props.userId) {
             return (
                 <OverlayTrigger
-                    ref={this.setOverlayRef}
+                    ref={this.overlay}
                     trigger='click'
                     placement='right'
                     rootClose={true}

@@ -51,7 +51,6 @@ describe('components/channel_members_dropdown', () => {
             }),
             getChannelStats: jest.fn(),
             updateChannelMemberSchemeRoles: jest.fn(),
-            getChannelMember: jest.fn(),
         },
     };
 

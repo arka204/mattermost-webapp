@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {cloneDeep} from 'lodash';
 
 import {Groups} from 'mattermost-redux/constants';
 
@@ -40,7 +39,6 @@ export default class ChannelDetails extends React.Component {
             getTeam: PropTypes.func.isRequired,
             patchChannel: PropTypes.func.isRequired,
             updateChannelPrivacy: PropTypes.func.isRequired,
-            patchGroupSyncable: PropTypes.func.isRequired,
         }).isRequired,
     };
 
@@ -69,7 +67,7 @@ export default class ChannelDetails extends React.Component {
 
     componentDidUpdate(prevProps) {
         const {channel, totalGroups} = this.props;
-        if (channel.id !== prevProps.channel.id || totalGroups !== prevProps.totalGroups) {
+        if (channel.id !== prevProps.channel.id) {
             // eslint-disable-next-line react/no-did-update-set-state
             this.setState({
                 totalGroups,
@@ -142,16 +140,6 @@ export default class ChannelDetails extends React.Component {
         const groups = this.state.groups.filter((g) => g.id !== gid);
         this.setState({totalGroups: this.state.totalGroups - 1});
 
-        this.processGroupsChange(groups);
-    }
-
-    setNewGroupRole = (gid) => {
-        const groups = cloneDeep(this.state.groups).map((g) => {
-            if (g.id === gid) {
-                g.scheme_admin = !g.scheme_admin;
-            }
-            return g;
-        });
         this.processGroupsChange(groups);
     }
 
@@ -241,22 +229,9 @@ export default class ChannelDetails extends React.Component {
                 }));
             }
 
-            const patchChannelSyncable = groups.
-                filter((g) => {
-                    return origGroups.some((group) => group.id === g.id && group.scheme_admin !== g.scheme_admin);
-                }).
-                map((g) => actions.patchGroupSyncable(g.id, channelID, Groups.SYNCABLE_TYPE_CHANNEL, {scheme_admin: g.scheme_admin}));
-            const unlink = origGroups.
-                filter((g) => {
-                    return !groups.some((group) => group.id === g.id);
-                }).
-                map((g) => actions.unlinkGroupSyncable(g.id, channelID, Groups.SYNCABLE_TYPE_CHANNEL));
-            const link = groups.
-                filter((g) => {
-                    return !origGroups.some((group) => group.id === g.id);
-                }).
-                map((g) => actions.linkGroupSyncable(g.id, channelID, Groups.SYNCABLE_TYPE_CHANNEL, {auto_add: true}));
-            const result = await Promise.all([...promises, ...patchChannelSyncable, ...unlink, ...link]);
+            const unlink = origGroups.filter((g) => !groups.includes(g)).map((g) => actions.unlinkGroupSyncable(g.id, channelID, Groups.SYNCABLE_TYPE_CHANNEL));
+            const link = groups.filter((g) => !origGroups.includes(g)).map((g) => actions.linkGroupSyncable(g.id, channelID, Groups.SYNCABLE_TYPE_CHANNEL, {auto_add: true}));
+            const result = await Promise.all([...promises, ...unlink, ...link]);
             const resultWithError = result.find((r) => r.error);
             if (resultWithError) {
                 serverError = <FormError error={resultWithError.error.message}/>;
@@ -336,7 +311,6 @@ export default class ChannelDetails extends React.Component {
                             removedGroups={removedGroups}
                             onAddCallback={this.handleGroupChange}
                             onGroupRemoved={this.handleGroupRemoved}
-                            setNewGroupRole={this.setNewGroupRole}
                         />
                     </div>
                 </div>

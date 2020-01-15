@@ -3,25 +3,28 @@
 
 import React from 'react';
 
-import LocalizedIcon from 'components/localized_icon';
-
-import {t} from 'utils/i18n';
+import {intlShape} from 'react-intl';
 
 type Props = {
     additionalClassName: string | null;
 }
 
 export default class NextIcon extends React.PureComponent<Props> {
+    public static contextTypes = {
+        intl: intlShape.isRequired,
+    };
+
     public static defaultProps: Props = {
         additionalClassName: null,
     };
 
     public render(): JSX.Element {
+        const {formatMessage} = this.context.intl;
         const className = 'fa fa-1x fa-angle-right' + (this.props.additionalClassName ? ' ' + this.props.additionalClassName : '');
         return (
-            <LocalizedIcon
+            <i
                 className={className}
-                title={{id: t('generic_icons.next'), defaultMessage: 'Next Icon'}}
+                title={formatMessage({id: 'generic_icons.next', defaultMessage: 'Next Icon'})}
             />
         );
     }

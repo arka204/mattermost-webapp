@@ -83,14 +83,6 @@ export default class ConfirmModal extends React.Component {
         modalClass: '',
     }
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            checked: false,
-        };
-    }
-
     componentDidMount() {
         if (this.props.show) {
             document.addEventListener('keydown', this.handleKeypress);
@@ -124,16 +116,14 @@ export default class ConfirmModal extends React.Component {
         }
     }
 
-    handleCheckboxChange = (e) => {
-        this.setState({checked: e.target.checked});
-    }
-
     handleConfirm = () => {
-        this.props.onConfirm(this.state.checked);
+        const checked = this.refs.checkbox ? this.refs.checkbox.checked : false;
+        this.props.onConfirm(checked);
     }
 
     handleCancel = () => {
-        this.props.onCancel(this.state.checked);
+        const checked = this.refs.checkbox ? this.refs.checkbox.checked : false;
+        this.props.onCancel(checked);
     }
 
     render() {
@@ -143,9 +133,8 @@ export default class ConfirmModal extends React.Component {
                 <div className='checkbox text-right margin-bottom--none'>
                     <label>
                         <input
+                            ref='checkbox'
                             type='checkbox'
-                            onChange={this.handleCheckboxChange}
-                            value={this.state.checked}
                         />
                         {this.props.checkboxText}
                     </label>
